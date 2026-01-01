@@ -1,0 +1,92 @@
+# ================================================
+# VERCEL ENVIRONMENT VARIABLES - PRODUCTION
+# FOR DOMAIN: https://careerbootcampbd.com
+# ================================================
+# Copy each line below and paste into Vercel Dashboard
+# Settings → Environment Variables → Add Variable
+#
+# Select "All Environments" for each variable
+# ================================================
+
+# ==================== FRONTEND ====================
+
+VITE_API_URL=/api/v1
+VITE_API_TIMEOUT=30000
+VITE_APP_NAME=Private Bank Bootcamp
+VITE_APP_URL=https://careerbootcampbd.com
+VITE_ENV=production
+VITE_DEBUG=false
+
+# ==================== BACKEND - REQUIRED ====================
+
+NODE_ENV=production
+MONGODB_URI=mongodb+srv://Shopno:Shopno24@cluster1.npnsgne.mongodb.net/PrivateBankBootcamp?retryWrites=true&w=majority&appName=Cluster1
+DB_NAME=PrivateBankBootcamp
+
+# JWT Secrets - SECURE SECRETS ALREADY GENERATED
+JWT_ACCESS_SECRET=8K9mPqR3sT6vY2zB5cF8hJ1kL4nM7pQ0rS3tU6vW9xA2yC5eG8iH1jK4mN7oP0qR
+JWT_REFRESH_SECRET=2L5nO8qS1tV4wY7zA3cE6gJ9kM2oR5uX8yB1dF4hK7mP0sT3vW6zA9cE2fH5jL8n
+JWT_ACCESS_EXPIRES_IN=15m
+JWT_REFRESH_EXPIRES_IN=7d
+
+# CORS Configuration
+FRONTEND_URL=https://careerbootcampbd.com
+ENABLE_CORS=true
+
+# Security
+BCRYPT_ROUNDS=12
+SESSION_SECRET=9N2qT5wZ8yC1fH4kM7pS0vX3aD6gJ9mP2rU5xA8cE1fI4lO7rT0wY3bE6hK9nQ2s
+
+# ==================== BACKEND - OPTIONAL ====================
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+
+# File Upload Settings
+MAX_FILE_SIZE=10485760
+ALLOWED_FILE_TYPES=application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+# Logging
+LOG_LEVEL=info
+
+# Exam Settings
+DEFAULT_EXAM_DURATION=60
+DEFAULT_QUESTIONS_PER_EXAM=50
+ENABLE_NEGATIVE_MARKING=true
+NEGATIVE_MARK_PERCENTAGE=0.25
+
+# Payment (Dummy - Update when ready)
+PAYMENT_PROVIDER=dummy
+PAYMENT_API_KEY=dummy_key
+PAYMENT_WEBHOOK_SECRET=dummy_webhook_secret
+
+# ================================================
+# QUICK SETUP INSTRUCTIONS
+# ================================================
+#
+# 1. Go to Vercel Dashboard → Your Project
+# 2. Click "Settings" → "Environment Variables"
+# 3. For each variable above:
+#    - Click "Add New"
+#    - Key: Variable name (e.g., VITE_API_URL)
+#    - Value: The value after the = sign
+#    - Environment: Select ALL (Production, Preview, Development)
+#    - Click "Save"
+# 4. After adding all variables:
+#    - Go to "Deployments"
+#    - Click latest deployment
+#    - Click "Redeploy"
+#
+# ================================================
+# REQUIRED VARIABLES (MUST ADD THESE)
+# ================================================
+#
+# ✅ VITE_APP_URL=https://careerbootcampbd.com
+# ✅ FRONTEND_URL=https://careerbootcampbd.com
+# ✅ MONGODB_URI=mongodb+srv://...
+# ✅ JWT_ACCESS_SECRET=...
+# ✅ JWT_REFRESH_SECRET=...
+# ✅ SESSION_SECRET=...
+#
+# ================================================
