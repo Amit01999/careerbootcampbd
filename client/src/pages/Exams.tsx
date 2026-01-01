@@ -31,7 +31,7 @@ const Exams = () => {
         setError(null);
         const response = await examService.getExams({
           page: 1,
-          limit: 100 // Fetch all exams for now
+          limit: 100, // Fetch all exams for now
         });
 
         // Transform API data to match component expectations
@@ -46,7 +46,7 @@ const Exams = () => {
           difficulty: exam.sections?.[0]?.difficulty || 'medium',
           category: exam.examType || exam.category,
           isFree: exam.pricing?.isFree || false,
-          isPurchased: false // TODO: Check if user has purchased
+          isPurchased: false, // TODO: Check if user has purchased
         }));
 
         setExams(transformedExams);
@@ -73,7 +73,8 @@ const Exams = () => {
     const matchesCategory =
       selectedCategory === 'all' || exam.category === selectedCategory;
     const matchesDifficulty =
-      selectedDifficulty === 'all' || exam.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
+      selectedDifficulty === 'all' ||
+      exam.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
 
     return matchesSearch && matchesCategory && matchesDifficulty;
   });
@@ -176,7 +177,9 @@ const Exams = () => {
           {loading && (
             <div className="flex items-center justify-center py-16">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-3 text-lg text-muted-foreground">Loading exams...</span>
+              <span className="ml-3 text-lg text-muted-foreground">
+                Loading exams...
+              </span>
             </div>
           )}
 
@@ -184,9 +187,7 @@ const Exams = () => {
           {error && !loading && (
             <div className="text-center py-16">
               <p className="text-lg text-destructive mb-4">{error}</p>
-              <Button onClick={() => window.location.reload()}>
-                Retry
-              </Button>
+              <Button onClick={() => window.location.reload()}>Retry</Button>
             </div>
           )}
 
@@ -200,23 +201,26 @@ const Exams = () => {
           )}
 
           {/* No Results */}
-          {!loading && !error && filteredExams.length === 0 && exams.length > 0 && (
-            <div className="text-center py-16">
-              <p className="text-lg text-muted-foreground mb-4">
-                No exams found matching your criteria
-              </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('all');
-                  setSelectedDifficulty('all');
-                }}
-              >
-                Clear Filters
-              </Button>
-            </div>
-          )}
+          {!loading &&
+            !error &&
+            filteredExams.length === 0 &&
+            exams.length > 0 && (
+              <div className="text-center py-16">
+                <p className="text-lg text-muted-foreground mb-4">
+                  No exams found matching your criteria
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('all');
+                    setSelectedDifficulty('all');
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            )}
 
           {/* Empty State */}
           {!loading && !error && exams.length === 0 && (

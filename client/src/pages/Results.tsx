@@ -21,7 +21,7 @@ import {
   TrendingUp,
   TrendingDown,
   Loader2,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { examService } from '@/services/exam.service';
@@ -40,7 +40,12 @@ const Results = () => {
         setLoading(true);
         setError(null);
 
-        const response = await examService.getMyAttempts(1, 100, undefined, filterStatus === 'all' ? undefined : filterStatus.toLowerCase());
+        const response = await examService.getMyAttempts(
+          1,
+          100,
+          undefined,
+          filterStatus === 'all' ? undefined : filterStatus.toLowerCase()
+        );
 
         // Transform API data to match component expectations
         const transformedResults = response.data.map((attempt: any) => ({
@@ -52,7 +57,9 @@ const Results = () => {
           percentage: attempt.percentage || 0,
           status: attempt.passed ? 'Passed' : 'Failed',
           timeTaken: attempt.timeTaken
-            ? `${Math.floor(attempt.timeTaken / 60)}:${(attempt.timeTaken % 60).toString().padStart(2, '0')}`
+            ? `${Math.floor(attempt.timeTaken / 60)}:${(attempt.timeTaken % 60)
+                .toString()
+                .padStart(2, '0')}`
             : 'N/A',
           rank: attempt.rank || null,
         }));
@@ -60,7 +67,8 @@ const Results = () => {
         setResults(transformedResults);
       } catch (err: any) {
         console.error('Failed to fetch results:', err);
-        const errorMsg = err.response?.data?.message || 'Failed to load exam results';
+        const errorMsg =
+          err.response?.data?.message || 'Failed to load exam results';
         setError(errorMsg);
         toast.error(errorMsg);
       } finally {
@@ -71,31 +79,36 @@ const Results = () => {
     fetchResults();
   }, [filterStatus]);
 
-  const filteredResults = results.filter((result) => {
-    const matchesSearch = result.examName.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredResults = results.filter(result => {
+    const matchesSearch = result.examName
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     return matchesSearch;
   });
 
-  const avgScore = results.length > 0
-    ? results.reduce((acc, r) => acc + r.percentage, 0) / results.length
-    : 0;
-  const passRate = results.length > 0
-    ? (results.filter((r) => r.status === 'Passed').length / results.length) * 100
-    : 0;
+  const avgScore =
+    results.length > 0
+      ? results.reduce((acc, r) => acc + r.percentage, 0) / results.length
+      : 0;
+  const passRate =
+    results.length > 0
+      ? (results.filter(r => r.status === 'Passed').length / results.length) *
+        100
+      : 0;
 
   // Loading state
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
         <main className="flex-grow flex items-center justify-center bg-muted/30">
           <div className="text-center">
             <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Loading Results...</h2>
-            <p className="text-muted-foreground">Please wait while we fetch your exam history</p>
+            <p className="text-muted-foreground">
+              Please wait while we fetch your exam history
+            </p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -104,26 +117,26 @@ const Results = () => {
   if (error) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
         <main className="flex-grow flex items-center justify-center bg-muted/30">
           <Card className="max-w-md mx-4">
             <CardContent className="p-8 text-center">
               <AlertTriangle className="w-16 h-16 text-destructive mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Unable to Load Results</h2>
+              <h2 className="text-2xl font-bold mb-2">
+                Unable to Load Results
+              </h2>
               <p className="text-muted-foreground mb-6">{error}</p>
-              <Button onClick={() => window.location.reload()}>Try Again</Button>
+              <Button onClick={() => window.location.reload()}>
+                Try Again
+              </Button>
             </CardContent>
           </Card>
         </main>
-        <Footer />
       </div>
     );
   }
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       <main className="flex-grow py-8 px-4 bg-muted/30">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header */}
@@ -140,7 +153,9 @@ const Results = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Total Exams</p>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      Total Exams
+                    </p>
                     <p className="text-3xl font-bold">{results.length}</p>
                   </div>
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -154,7 +169,9 @@ const Results = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Average Score</p>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      Average Score
+                    </p>
                     <p className="text-3xl font-bold">{avgScore.toFixed(1)}%</p>
                   </div>
                   <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center">
@@ -168,7 +185,9 @@ const Results = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Pass Rate</p>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      Pass Rate
+                    </p>
                     <p className="text-3xl font-bold">{passRate.toFixed(0)}%</p>
                   </div>
                   <div className="w-12 h-12 rounded-lg bg-success/10 flex items-center justify-center">
@@ -189,7 +208,7 @@ const Results = () => {
                     placeholder="Search exams..."
                     className="pl-10"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={e => setSearchQuery(e.target.value)}
                   />
                 </div>
                 <Select value={filterStatus} onValueChange={setFilterStatus}>
@@ -208,8 +227,11 @@ const Results = () => {
 
           {/* Results List */}
           <div className="space-y-4">
-            {filteredResults.map((result) => (
-              <Card key={result.id} className="transition-smooth hover:shadow-lg">
+            {filteredResults.map(result => (
+              <Card
+                key={result.id}
+                className="transition-smooth hover:shadow-lg"
+              >
                 <CardContent className="p-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
                     {/* Left: Exam Info */}
@@ -218,11 +240,15 @@ const Results = () => {
                         <BookOpen className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-bold mb-1">{result.examName}</h3>
+                        <h3 className="text-lg font-bold mb-1">
+                          {result.examName}
+                        </h3>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                           <div className="flex items-center space-x-1">
                             <Calendar className="w-4 h-4" />
-                            <span>{new Date(result.date).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(result.date).toLocaleDateString()}
+                            </span>
                           </div>
                           <span>Time: {result.timeTaken}</span>
                           {result.rank && <span>Rank: #{result.rank}</span>}
@@ -233,7 +259,9 @@ const Results = () => {
                     {/* Center: Score */}
                     <div className="flex items-center space-x-8">
                       <div className="text-center">
-                        <p className="text-3xl font-bold">{result.percentage}%</p>
+                        <p className="text-3xl font-bold">
+                          {result.percentage}%
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           {result.score}/{result.totalMarks}
                         </p>
@@ -267,7 +295,9 @@ const Results = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => toast.info('Download feature coming soon!')}
+                        onClick={() =>
+                          toast.info('Download feature coming soon!')
+                        }
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download
@@ -281,7 +311,9 @@ const Results = () => {
 
           {filteredResults.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-lg text-muted-foreground mb-4">No results found</p>
+              <p className="text-lg text-muted-foreground mb-4">
+                No results found
+              </p>
               <Link to="/exams">
                 <Button>Take an Exam</Button>
               </Link>
@@ -289,8 +321,6 @@ const Results = () => {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

@@ -11,7 +11,10 @@
       "Bash(node src/seeds/seedModelTests.js:*)",
       "Bash(node src/seeds/runSeedModelTests.js:*)",
       "Bash(netstat:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(del \"d:\\\\PrivateBankBootcamp\\\\v3\\\\client\\\\vercel.json\")",
+      "Bash(del \"d:\\\\PrivateBankBootcamp\\\\v3\\\\server\\\\vercel.json\")",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

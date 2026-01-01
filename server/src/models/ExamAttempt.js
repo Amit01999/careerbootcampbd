@@ -131,16 +131,7 @@ examAttemptSchema.index({ user: 1, status: 1 });
 examAttemptSchema.index({ 'score.scorePercentage': -1 });
 examAttemptSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 7 * 24 * 60 * 60 }); // Auto-cleanup after 7 days
 
-// Auto-populate questions
-examAttemptSchema.pre(/^find/, function (next) {
-  if (this.getPopulate('questions')) {
-    this.populate({
-      path: 'questions',
-      select: 'questionText questionTextBn options subject difficulty marks',
-    });
-  }
-  next();
-});
+// Note: Questions are populated explicitly where needed in controllers/services
 
 // Calculate score
 examAttemptSchema.methods.calculateScore = function () {

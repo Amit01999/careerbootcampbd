@@ -13,7 +13,7 @@ import {
   XCircle,
   Play,
   Loader2,
-  AlertTriangle
+  AlertTriangle,
 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { examService } from '@/services/exam.service';
@@ -43,7 +43,8 @@ const ExamStart = () => {
         setExam(data);
       } catch (err: any) {
         console.error('Failed to fetch exam:', err);
-        const errorMsg = err.response?.data?.message || 'Failed to load exam details';
+        const errorMsg =
+          err.response?.data?.message || 'Failed to load exam details';
         setError(errorMsg);
         toast.error(errorMsg);
       } finally {
@@ -62,15 +63,15 @@ const ExamStart = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
         <main className="flex-grow flex items-center justify-center bg-muted/30">
           <div className="text-center">
             <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Loading Exam Details...</h2>
-            <p className="text-muted-foreground">Please wait while we prepare your exam</p>
+            <p className="text-muted-foreground">
+              Please wait while we prepare your exam
+            </p>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -79,7 +80,6 @@ const ExamStart = () => {
   if (error || !exam) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Navbar />
         <main className="flex-grow flex items-center justify-center bg-muted/30">
           <Card className="max-w-md mx-4">
             <CardContent className="p-8 text-center">
@@ -92,34 +92,37 @@ const ExamStart = () => {
             </CardContent>
           </Card>
         </main>
-        <Footer />
       </div>
     );
   }
 
   // Extract exam information
-  const hasNegativeMarking = exam.sections?.some((section: any) => section.negativeMarking?.enabled);
-  const negativeMarks = exam.sections?.find((section: any) => section.negativeMarking?.enabled)
-    ?.negativeMarking?.marksPerWrong || 0.25;
+  const hasNegativeMarking = exam.sections?.some(
+    (section: any) => section.negativeMarking?.enabled
+  );
+  const negativeMarks =
+    exam.sections?.find((section: any) => section.negativeMarking?.enabled)
+      ?.negativeMarking?.marksPerWrong || 0.25;
 
   // Parse instructions (convert string to array if needed)
-  const instructions = typeof exam.instructions === 'string'
-    ? exam.instructions.split('\n').filter((line: string) => line.trim())
-    : Array.isArray(exam.instructions)
-    ? exam.instructions
-    : [
-        'Read each question carefully before selecting your answer',
-        'You can skip questions and return to them later',
-        hasNegativeMarking ? `Negative marking of ${negativeMarks} marks for each wrong answer` : '',
-        'The exam will auto-submit when time runs out',
-        'Ensure stable internet connection throughout the exam',
-        'Do not refresh or close the browser during the exam',
-      ].filter(Boolean);
+  const instructions =
+    typeof exam.instructions === 'string'
+      ? exam.instructions.split('\n').filter((line: string) => line.trim())
+      : Array.isArray(exam.instructions)
+      ? exam.instructions
+      : [
+          'Read each question carefully before selecting your answer',
+          'You can skip questions and return to them later',
+          hasNegativeMarking
+            ? `Negative marking of ${negativeMarks} marks for each wrong answer`
+            : '',
+          'The exam will auto-submit when time runs out',
+          'Ensure stable internet connection throughout the exam',
+          'Do not refresh or close the browser during the exam',
+        ].filter(Boolean);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
       <main className="flex-grow py-8 px-4 bg-muted/30">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Exam Header */}
@@ -127,7 +130,9 @@ const ExamStart = () => {
             <CardHeader>
               <div className="space-y-4">
                 <h1 className="text-3xl font-bold">{exam.title}</h1>
-                <p className="text-lg text-muted-foreground">{exam.description}</p>
+                <p className="text-lg text-muted-foreground">
+                  {exam.description}
+                </p>
               </div>
             </CardHeader>
             <CardContent>
@@ -169,7 +174,8 @@ const ExamStart = () => {
             <Alert className="border-warning bg-warning/10">
               <XCircle className="h-4 w-4 text-warning" />
               <AlertDescription className="text-warning-foreground">
-                <strong>Negative Marking:</strong> Each wrong answer will deduct {negativeMarks} marks
+                <strong>Negative Marking:</strong> Each wrong answer will deduct{' '}
+                {negativeMarks} marks
               </AlertDescription>
             </Alert>
           )}
@@ -184,7 +190,7 @@ const ExamStart = () => {
             </CardHeader>
             <CardContent>
               <ul className="space-y-3">
-                {exam.instructions.map((instruction, index) => (
+                {instructions.map((instruction, index) => (
                   <li key={index} className="flex items-start space-x-3">
                     <span className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                       {index + 1}
@@ -205,7 +211,8 @@ const ExamStart = () => {
               <div>
                 <h3 className="text-2xl font-bold mb-2">Ready to Begin?</h3>
                 <p className="text-muted-foreground">
-                  Make sure you have read all instructions carefully before starting
+                  Make sure you have read all instructions carefully before
+                  starting
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -230,8 +237,6 @@ const ExamStart = () => {
           </Card>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

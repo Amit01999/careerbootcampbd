@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -10,6 +11,32 @@ import routes from './routes/index.js';
 import { notFound, errorHandler } from './middleware/error.js';
 import { generalLimiter } from './middleware/rateLimiter.js';
 import logger from './config/logger.js';
+import connectDB from './config/database.js';
+
+// Load environment variables
+dotenv.config();
+
+// Database connection for serverless
+// Vercel will reuse the connection across invocations
+let isConnected = false;
+
+const ensureDbConnection = async () => {
+  if (!isConnected) {
+    try {
+      await connectDB();
+      isConnected = true;
+      logger.info('Database connected for serverless function');
+    } catch (error) {
+      logger.error('Database connection failed:', error);
+      throw error;
+    }
+  }
+};
+
+// Initialize database connection
+ensureDbConnection().catch(err => {
+  logger.error('Failed to connect to database:', err);
+});
 
 const app = express();
 
