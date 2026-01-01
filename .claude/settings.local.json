@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(nul)",
+      "Bash(dir:*)",
+      "Bash(cat:*)",
+      "Bash(test:*)",
+      "Bash(timeout 10 npm start)",
+      "Bash(findstr:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node src/seeds/seedModelTests.js:*)",
+      "Bash(node src/seeds/runSeedModelTests.js:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
