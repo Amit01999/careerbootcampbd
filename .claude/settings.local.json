@@ -14,7 +14,10 @@
       "Bash(taskkill:*)",
       "Bash(del \"d:\\\\PrivateBankBootcamp\\\\v3\\\\client\\\\vercel.json\")",
       "Bash(del \"d:\\\\PrivateBankBootcamp\\\\v3\\\\server\\\\vercel.json\")",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
