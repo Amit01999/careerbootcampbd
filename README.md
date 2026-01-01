@@ -5,25 +5,6 @@
 A comprehensive MERN stack platform for Bangladesh private bank job preparation
 with online exams, job circulars, and instant results.
 
-## 🚀 Quick Deploy to Vercel
-
-This project is **ready for Vercel deployment** as a single, unified project. No
-additional code changes needed!
-
-**⚡ Quick Start:** Follow [QUICK_START_VERCEL.md](QUICK_START_VERCEL.md) - Deploy in 10 minutes!
-
-**📋 Copy-Paste Ready:** Open [VERCEL_ENV_COPY_PASTE.txt](VERCEL_ENV_COPY_PASTE.txt) for ready-to-use environment variables.
-
-**📖 Full Guides:**
-
-- **[QUICK_START_VERCEL.md](QUICK_START_VERCEL.md)** - ⚡ 10-minute deployment guide
-- **[VERCEL_ENV_COPY_PASTE.txt](VERCEL_ENV_COPY_PASTE.txt)** - 📋 Copy-paste environment variables
-- **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)** - ✅ Complete checklist
-- **[VERCEL_DEPLOYMENT_GUIDE.md](VERCEL_DEPLOYMENT_GUIDE.md)** - 📚 Comprehensive guide
-- **[DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)** - ℹ️ What's been configured
-
----
-
 ## 🌟 Features
 
 ### For Students
