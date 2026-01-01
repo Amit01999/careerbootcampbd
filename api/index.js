@@ -1,6 +1,6 @@
-import app from '../src/app.js';
-import connectDB from '../src/config/database.js';
-import { initializeFirebase } from '../src/config/firebase.js';
+import app from '../server/src/app.js';
+import connectDB from '../server/src/config/database.js';
+import { initializeFirebase } from '../server/src/config/firebase.js';
 
 let isInitialized = false;
 
