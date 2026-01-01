@@ -19,12 +19,15 @@
       "dest": "server/api/index.js"
     },
     {
-      "src": "/(.*\\..+)",
-      "dest": "client/dist/$1"
+      "src": "/assets/(.*)",
+      "dest": "client/dist/assets/$1"
     },
     {
       "src": "/(.*)",
       "dest": "client/dist/index.html"
     }
-  ]
+  ],
+  "github": {
+    "silent": true
+  }
 }

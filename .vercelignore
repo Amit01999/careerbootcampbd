@@ -1,0 +1,36 @@
+# Vercel Ignore - Don't upload these to Vercel
+node_modules
+.git
+.env
+.env.*
+!.env.example
+*.log
+logs
+.cache
+dist
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode
+.idea
+
+# Test files
+**/*.test.js
+**/*.spec.js
+**/__tests__
+**/__mocks__
+coverage
+
+# Development files
+*.md
+!README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Large files not needed for deployment
+client/node_modules
+server/node_modules
+server/uploads
+server/temp
