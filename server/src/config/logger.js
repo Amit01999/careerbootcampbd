@@ -30,6 +30,7 @@ const format = winston.format.combine(
   winston.format.json(),
 );
 
+// Console transport (always enabled)
 const transports = [
   new winston.transports.Console({
     format: winston.format.combine(
@@ -39,18 +40,24 @@ const transports = [
       ),
     ),
   }),
-  new winston.transports.File({
-    filename: path.join(__dirname, '../../logs/error.log'),
-    level: 'error',
-    maxsize: 5242880, // 5MB
-    maxFiles: 5,
-  }),
-  new winston.transports.File({
-    filename: path.join(__dirname, '../../logs/combined.log'),
-    maxsize: 5242880,
-    maxFiles: 5,
-  }),
 ];
+
+// File transports (only in development, not in serverless)
+if (process.env.NODE_ENV !== 'production') {
+  transports.push(
+    new winston.transports.File({
+      filename: path.join(__dirname, '../../logs/error.log'),
+      level: 'error',
+      maxsize: 5242880, // 5MB
+      maxFiles: 5,
+    }),
+    new winston.transports.File({
+      filename: path.join(__dirname, '../../logs/combined.log'),
+      maxsize: 5242880,
+      maxFiles: 5,
+    })
+  );
+}
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
