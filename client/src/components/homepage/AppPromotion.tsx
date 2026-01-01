@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, CheckCircle, Download } from 'lucide-react';
 import { Button } from '../ui/button';
-import appScreen from '/mnt/data/ae7d35fd-eaf8-4cdd-8c65-d84fc768c219.png';
+import appScreen from '../../assets/mobile.png';
 
 export default function AppPromotion() {
   return (
