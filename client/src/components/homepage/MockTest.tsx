@@ -7,8 +7,9 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Star, ChevronRight, Loader2 } from 'lucide-react';
+import { CheckCircle, Star, ChevronRight, Loader2, Zap } from 'lucide-react';
 import { examService } from '@/services/exam.service';
+import { motion } from 'framer-motion';
 
 export default function MockTest() {
   const navigate = useNavigate();
@@ -31,91 +32,119 @@ export default function MockTest() {
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F5F7FA] to-[#E9EDF5]">
-      <div className="mx-auto max-w-[1200px]">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-[#2C3E50] mb-2">
+    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[150px]" />
+      </div>
+
+      <div className="mx-auto max-w-[1200px] relative z-10">
+        <div className="flex items-end justify-between mb-12">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-2 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
               Popular Mock Test Series
             </h2>
-            <p className="text-lg text-[#556270]">
+            <p className="text-lg text-white/60">
               Practice using the most accurate and real-exam-based mock tests in
               Bangladesh
             </p>
-          </div>
+          </motion.div>
 
-          <Button
-            variant="link"
-            className="text-[#79CBFA] hover:text-[#58B1E8] font-medium"
-            onClick={() => navigate('/exams')}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            View All Mock Tests <ChevronRight className="ml-1 h-4 w-4" />
-          </Button>
+            <Button
+              variant="link"
+              className="text-cyan-400 hover:text-cyan-300 font-medium"
+              onClick={() => navigate('/exams')}
+            >
+              View All Mock Tests <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          </motion.div>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-[#79CBFA]" />
-            <span className="ml-3 text-lg text-[#556270]">Loading exams...</span>
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-cyan-400" />
+            <span className="ml-3 text-lg text-white/60">Loading exams...</span>
           </div>
         ) : exams.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-lg text-[#556270]">No exams available at this time</p>
+          <div className="text-center py-20">
+            <p className="text-lg text-white/60">No exams available at this time</p>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {exams.map((exam) => (
-              <Card
+            {exams.map((exam, index) => (
+              <motion.div
                 key={exam._id}
-                className="bg-white border border-[#E3E8EF] hover:shadow-lg transition-all duration-300"
-                style={{ borderRadius: '6px' }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <CardHeader className="p-5">
-                  <div className="flex items-center justify-between mb-3">
-                    <Badge className="bg-[#79CBFA] text-white font-medium px-2.5 py-1">
-                      {exam.examType || 'Mock Test'}
-                    </Badge>
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                  className="group relative h-full"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <Card className="relative h-full bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.03] backdrop-blur-2xl border border-white/20 group-hover:border-cyan-400/50 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <CardHeader className="p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium px-2.5 py-1 border-0">
+                          {exam.examType || 'Mock Test'}
+                        </Badge>
 
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 fill-[#FFD700] text-[#FFD700]" />
-                      <span className="text-sm font-semibold text-[#2C3E50]">
-                        4.5
-                      </span>
-                    </div>
-                  </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                          <span className="text-sm font-semibold text-white">
+                            4.5
+                          </span>
+                        </div>
+                      </div>
 
-                  <CardTitle className="text-base font-semibold text-[#34495E] leading-snug mb-4">
-                    {exam.title}
-                  </CardTitle>
+                      <CardTitle className="text-base font-semibold text-white leading-snug mb-4 group-hover:text-cyan-400 transition-colors">
+                        {exam.title}
+                      </CardTitle>
 
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-sm text-[#6C7A89]">
-                      <CheckCircle className="h-4 w-4 text-[#25cd71]" />
-                      {exam.totalQuestions || 0} MCQ Questions
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-[#6C7A89]">
-                      <CheckCircle className="h-4 w-4 text-[#25cd71]" />
-                      {exam.duration || 0} Minutes
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-[#6C7A89]">
-                      <CheckCircle className="h-4 w-4 text-[#25cd71]" />
-                      {exam.totalMarks || 0} Marks
-                    </div>
-                  </div>
+                      <div className="space-y-2 mb-4">
+                        <div className="flex items-center gap-2 text-sm text-white/70">
+                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          {exam.totalQuestions || 0} MCQ Questions
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-white/70">
+                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          {exam.duration || 0} Minutes
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-white/70">
+                          <CheckCircle className="h-4 w-4 text-emerald-400" />
+                          {exam.totalMarks || 0} Marks
+                        </div>
+                      </div>
 
-                  <p className="text-xs text-[#7F8C8D] mb-4">
-                    {exam.attemptCount || 0}+ attempts
-                  </p>
+                      <p className="text-xs text-white/50 mb-4">
+                        {exam.attemptCount || 0}+ attempts
+                      </p>
 
-                  <Button
-                    className="w-full bg-[#79CBFA] hover:bg-[#58B1E8] text-[#1B2A38] font-semibold transition-all"
-                    style={{ borderRadius: '5px' }}
-                    onClick={() => navigate(`/exam/${exam._id || exam.slug}/start`)}
-                  >
-                    Start Test
-                  </Button>
-                </CardHeader>
-              </Card>
+                      <Button
+                        className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-semibold transition-all shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] flex items-center justify-center gap-2"
+                        onClick={() => navigate(`/exam/${exam._id || exam.slug}/start`)}
+                      >
+                        <Zap className="w-4 h-4" />
+                        Start Test
+                      </Button>
+                    </CardHeader>
+                  </Card>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
         )}

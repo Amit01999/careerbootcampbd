@@ -16,7 +16,7 @@ export default function HeroSection() {
     'One Bank',
   ];
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#e3f5ff] via-[#f0f9ff] to-white">
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#e3f5ff] via-[#f0f9ff] to-white space-y-3">
       {/* Main Hero Container */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center py-12 lg:py-16 ">

@@ -1,32 +1,33 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { AdminRoute } from "@/components/AdminRoute";
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { AdminRoute } from '@/components/AdminRoute';
 
 // Student Pages
-import Index from "./pages/Index";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
-import Exams from "./pages/Exams";
-import ExamStart from "./pages/ExamStart";
-import ExamTaking from "./pages/ExamTaking";
-import ExamResult from "./pages/ExamResult";
-import Results from "./pages/Results";
-import Circulars from "./pages/Circulars";
-import AllRecruitmentProcesses from "./pages/AllRecruitmentProcesses";
-import RecruitmentProcessDetail from "./pages/RecruitmentProcessDetail";
+import Index from './pages/Index';
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
+import Exams from './pages/Exams';
+import ExamStart from './pages/ExamStart';
+import ExamTaking from './pages/ExamTaking';
+import ExamResult from './pages/ExamResult';
+import Results from './pages/Results';
+import Circulars from './pages/Circulars';
+import AllRecruitmentProcesses from './pages/AllRecruitmentProcesses';
+import RecruitmentProcessDetail from './pages/RecruitmentProcessDetail';
 
 // Admin Pages
-import { Layout } from "./components/Layout";
-import { AdminLayout } from "./components/admin/AdminLayout";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import QuestionBank from "./pages/admin/QuestionBank";
+import { Layout } from './components/Layout';
+import { AdminLayout } from './components/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import QuestionBank from './pages/admin/QuestionBank';
 
-import NotFound from "./pages/NotFound";
+import NotFound from './pages/NotFound';
+import Home1 from './components/Home1/Homepage1';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,13 +48,20 @@ const App = () => (
           <Routes>
             <Route element={<Layout />}>
               {/* Public Routes */}
-              <Route path="/" element={<Index />} />
+              {/* <Route path="/" element={<Index />} /> */}
+              <Route path="/" element={<Home1 />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/circulars" element={<Circulars />} />
-              <Route path="/recruitment-processes" element={<AllRecruitmentProcesses />} />
+              <Route
+                path="/recruitment-processes"
+                element={<AllRecruitmentProcesses />}
+              />
               <Route path="/bank/:id" element={<RecruitmentProcessDetail />} />
               {/* Legacy route redirect */}
-              <Route path="/recruitment-process/:id" element={<RecruitmentProcessDetail />} />
+              <Route
+                path="/recruitment-process/:id"
+                element={<RecruitmentProcessDetail />}
+              />
 
               {/* Protected Student Routes */}
               <Route

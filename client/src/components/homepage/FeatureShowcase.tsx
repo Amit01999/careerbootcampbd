@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { BookOpen, Target, Users, BarChart3 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function FeatureShowcase() {
   const features = [
@@ -16,109 +17,127 @@ export default function FeatureShowcase() {
       title: 'Updated Study Content',
       desc: '1000+ video lessons, PDF notes, and practice questions covering all major private banks - BRAC Bank, DBBL, City Bank, Eastern Bank, Prime Bank, and more.',
       badge: 'Bilingual',
-      color: '#0ad0f4',
+      color: 'from-cyan-400 to-blue-500',
     },
     {
       icon: Target,
       title: 'Bank-Specific Mock Tests',
       desc: '50+ full-length mock exams replicating actual bank recruitment patterns. Practice MCQ, written, and analytical sections with instant results.',
       badge: 'Updated 2025',
-      color: '#25cd71',
+      color: 'from-emerald-400 to-teal-500',
     },
     {
       icon: Users,
       title: 'Expert-Led Sessions',
       desc: 'Daily live classes by former bankers and exam toppers. Clear doubts in real-time and learn exam strategies from industry professionals.',
       badge: 'Interactive',
-      color: '#ffcb00',
+      color: 'from-amber-400 to-orange-500',
     },
     {
       icon: BarChart3,
       title: 'Smart Analytics Dashboard',
       desc: 'Track your preparation progress, identify weak areas, and get personalized recommendations to improve faster than competition.',
       badge: 'AI-Powered',
-      color: '#5738b2',
+      color: 'from-violet-400 to-purple-500',
     },
   ];
 
   return (
-    <div>
-      <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F2F6FF] to-[#E7EEFF]">
-        <div className="mx-auto max-w-7xl">
-          {/* Header Section */}
-          <div className="text-center space-y-5 mb-10">
-            <h2 className="text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-              Everything You Need to Succeed
-            </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
-              A complete preparation ecosystem designed for Bangladesh's private
-              bank exams
-            </p>
-          </div>
+    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-violet-500/5 rounded-full blur-[150px]" />
+      </div>
 
-          {/* Features Grid */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature, i) => (
-              <Card
-                key={i}
-                className="group relative bg-white border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl"
-                style={{ borderRadius: '12px' }}
+      <div className="mx-auto max-w-7xl relative z-10">
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center space-y-5 mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+            Everything You Need to{' '}
+            <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(6,182,212,0.4)]">
+              Succeed
+            </span>
+          </h2>
+          <p className="text-lg text-white/60 max-w-2xl mx-auto font-light">
+            A complete preparation ecosystem designed for Bangladesh's private
+            bank exams
+          </p>
+        </motion.div>
+
+        {/* Features Grid */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {features.map((feature, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+            >
+              <motion.div
+                whileHover={{ y: -8, scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="group relative h-full"
               >
-                <CardHeader className="p-8 space-y-5">
-                  {/* Icon */}
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                    style={{ backgroundColor: `${feature.color}20` }}
-                  >
-                    <feature.icon
-                      className="h-7 w-7"
-                      style={{ color: feature.color, strokeWidth: 2 }}
-                    />
-                  </div>
-
-                  {/* Badge */}
-                  <Badge
-                    className="w-fit text-xs font-medium px-3 py-1 rounded-md"
-                    style={{
-                      backgroundColor: `${feature.color}15`,
-                      color: feature.color,
-                      border: `1px solid ${feature.color}30`,
-                    }}
-                  >
-                    {feature.badge}
-                  </Badge>
-
-                  {/* Title */}
-                  <CardTitle className="text-xl font-semibold text-slate-900 leading-snug">
-                    {feature.title}
-                  </CardTitle>
-
-                  {/* Description */}
-                  <CardDescription className="text-sm text-slate-600 leading-relaxed font-normal">
-                    {feature.desc}
-                  </CardDescription>
-                </CardHeader>
-
-                {/* Accent line */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-1 rounded-b-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                  style={{ backgroundColor: feature.color }}
+                  className={`absolute -inset-1 bg-gradient-to-r ${feature.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`}
                 />
-              </Card>
-            ))}
-          </div>
+                <Card className="relative h-full bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.03] backdrop-blur-2xl border border-white/20 group-hover:border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <CardHeader className="p-7 space-y-5">
+                    {/* Icon */}
+                    <motion.div
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center transition-transform duration-300 shadow-lg`}
+                    >
+                      <feature.icon className="h-7 w-7 text-white" strokeWidth={2} />
+                    </motion.div>
 
-          {/* Bottom CTA */}
-          <div className="mt-10 text-center">
-            <Button className="bg-primary hover:Primary-hover text-white font-medium px-10 py-6 text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                    {/* Badge */}
+                    <Badge className={`w-fit text-xs font-medium px-3 py-1 rounded-md bg-gradient-to-r ${feature.color} text-white border-0`}>
+                      {feature.badge}
+                    </Badge>
+
+                    {/* Title */}
+                    <CardTitle className="text-xl font-semibold text-white leading-snug group-hover:text-cyan-400 transition-colors">
+                      {feature.title}
+                    </CardTitle>
+
+                    {/* Description */}
+                    <CardDescription className="text-sm text-white/60 leading-relaxed font-normal">
+                      {feature.desc}
+                    </CardDescription>
+                  </CardHeader>
+                </Card>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-16 text-center"
+        >
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button className="bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-500 hover:from-cyan-400 hover:via-cyan-300 hover:to-blue-400 text-[#030712] font-semibold px-12 py-6 text-base rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] hover:shadow-[0_0_60px_rgba(6,182,212,0.6)] transition-all duration-300">
               Get Started Today
             </Button>
-            <p className="mt-5 text-sm text-slate-500">
-              Free 7-day trial • No credit card required
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
+          </motion.div>
+          <p className="mt-6 text-sm text-white/50">
+            Free 7-day trial • No credit card required
+          </p>
+        </motion.div>
+      </div>
+    </section>
   );
 }
