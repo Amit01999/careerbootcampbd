@@ -7,7 +7,7 @@ import {
   ArrowRight,
   TrendingUp,
 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import video from '../../assets/herovideo.mp4';
 import heroAspirant from '../../assets/heroimg.png';
@@ -16,8 +16,35 @@ import Typewriter from 'typewriter-effect';
 const videoSrc = video;
 
 export default function HeroSection() {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Ensure video plays in production - handles autoplay restrictions
+  useEffect(() => {
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          // Set muted explicitly in code as well
+          videoRef.current.muted = true;
+          await videoRef.current.play();
+        } catch (error) {
+          console.error('Video autoplay failed:', error);
+          // Fallback: try to play on user interaction
+          const playOnInteraction = () => {
+            videoRef.current?.play().catch(e => console.error('Play failed:', e));
+            document.removeEventListener('click', playOnInteraction);
+            document.removeEventListener('touchstart', playOnInteraction);
+          };
+          document.addEventListener('click', playOnInteraction);
+          document.addEventListener('touchstart', playOnInteraction);
+        }
+      }
+    };
+
+    // Small delay to ensure video element is ready
+    const timer = setTimeout(playVideo, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleFullscreen = () => {
     if (!videoRef.current) return;
@@ -392,7 +419,7 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex items-center gap-8 mt-8 pt-8 border-t border-white/10"
+              className="flex items-center gap-8 mt-5 pt-4 border-t border-white/10"
             >
               <div>
                 <div className="text-2xl font-bold text-white">310K+</div>
@@ -933,8 +960,13 @@ export default function HeroSection() {
                   muted
                   loop
                   playsInline
+                  preload="auto"
+                  disablePictureInPicture
+                  disableRemotePlayback
+                  webkit-playsinline="true"
                 >
                   <source src={videoSrc} type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
 
                 {/* Bottom gradient overlay */}
