@@ -305,7 +305,7 @@ export default function BankPrepHomepage() {
 
       <main>
         <HeroSection />
-        <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden px-4 sm:px-6 lg:px-16">
+        {/* <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden px-4 sm:px-6 lg:px-16">
           <div className="max-w-8xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -391,7 +391,7 @@ export default function BankPrepHomepage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="relative py-16 overflow-hidden">
           <div className="absolute inset-0">
