@@ -10,10 +10,8 @@ import {
   Star,
 } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
-
+import videoSrc from '../../assets/herovideo.mp4';
 // Placeholder video source
-const videoSrc =
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
 const jobCirculars = [
   {
@@ -383,41 +381,46 @@ export default function HeroSection() {
                 </button>
               </div>
               {/* Stats Cards */}
-              <div className="animate-fadeInUp-delay3 opacity-0 grid grid-cols-3 gap-4 mt-4 mb-6">
-                <div className="group relative p-4 rounded-xl bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-cyan-400/40 transition-all hover:scale-105">
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+              <div className="animate-fadeInUp-delay3 opacity-0 grid grid-cols-3 gap-3 mt-4 mb-6">
+                {/* Card 1 */}
+                <div className="group relative p-2.5 rounded-lg bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-cyan-400/40 transition-all hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-lg transition-opacity" />
                   <div className="relative">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Users className="w-4 h-4 text-cyan-400" />
-                      <div className="text-2xl font-bold text-white">310K+</div>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Users className="w-3 h-3 text-cyan-400" />
+                      <div className="text-lg font-bold text-white">310K+</div>
                     </div>
-                    <div className="text-xs text-white/60 font-medium">
+                    <div className="text-[9px] text-white/60 font-medium">
                       Active Students
                     </div>
                     <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
                   </div>
                 </div>
-                <div className="group relative p-4 rounded-xl bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-emerald-400/40 transition-all hover:scale-105">
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+
+                {/* Card 2 */}
+                <div className="group relative p-2.5 rounded-lg bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-emerald-400/40 transition-all hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-lg transition-opacity" />
                   <div className="relative">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Target className="w-4 h-4 text-emerald-400" />
-                      <div className="text-2xl font-bold text-white">89%</div>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Target className="w-3 h-3 text-emerald-400" />
+                      <div className="text-lg font-bold text-white">89%</div>
                     </div>
-                    <div className="text-xs text-white/60 font-medium">
+                    <div className="text-[9px] text-white/60 font-medium">
                       Success Rate
                     </div>
                     <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
                   </div>
                 </div>
-                <div className="group relative p-4 rounded-xl bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-amber-400/40 transition-all hover:scale-105">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
+
+                {/* Card 3 */}
+                <div className="group relative p-2.5 rounded-lg bg-gradient-to-br from-white/8 via-white/5 to-white/3 border border-white/15 backdrop-blur-xl hover:border-amber-400/40 transition-all hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 rounded-lg transition-opacity" />
                   <div className="relative">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Star className="w-4 h-4 text-amber-400" />
-                      <div className="text-2xl font-bold text-white">4.9/5</div>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Star className="w-3 h-3 text-amber-400" />
+                      <div className="text-lg font-bold text-white">4.9/5</div>
                     </div>
-                    <div className="text-xs text-white/60 font-medium">
+                    <div className="text-[9px] text-white/60 font-medium">
                       Rating
                     </div>
                     <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
