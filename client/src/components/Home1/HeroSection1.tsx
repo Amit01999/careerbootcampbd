@@ -10,9 +10,10 @@ import {
   Star,
 } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
-import heroVideo from '../../assets/herovideo.mp4';
 
-const videoSrc = heroVideo;
+// Placeholder video source
+const videoSrc =
+  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
 const jobCirculars = [
   {
@@ -99,7 +100,7 @@ export default function HeroSection() {
     return () => clearTimeout(timeout);
   }, [typewriterText, textIndex]);
 
-  // Galaxy Canvas Animation
+  // Enhanced Galaxy Canvas Animation with moving particles
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -108,7 +109,6 @@ export default function HeroSection() {
     let animationFrameId;
     let time = 0;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -116,274 +116,196 @@ export default function HeroSection() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Star particles
+    // Moving stars - slow drifting with twinkle
     const stars = [];
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 200; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: Math.random() * 1.5 + 0.5,
-        opacity: Math.random(),
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        driftX: (Math.random() - 0.5) * 0.3,
-        driftY: (Math.random() - 0.5) * 0.3,
+        baseOpacity: Math.random() * 0.8 + 0.2,
+        twinkleSpeed: Math.random() * 0.02 + 0.01,
+        driftSpeed: Math.random() * 0.05 + 0.01,
+        driftAngle: Math.random() * Math.PI * 2,
+        angle: Math.random() * Math.PI * 2,
       });
     }
 
-    // Bright stars with glow
-    const brightStars = [];
-    for (let i = 0; i < 8; i++) {
-      brightStars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3 + 2,
-        opacity: Math.random() * 0.5 + 0.5,
-        pulseSpeed: Math.random() * 0.01 + 0.005,
-        color: i % 3 === 0 ? '#00BFFF' : i % 3 === 1 ? '#9D4EDD' : '#FF00FF',
-      });
-    }
-
-    // Nebula particles
+    // Nebula clouds - subtle blue particles
     const nebulaParticles = [];
     for (let i = 0; i < 80; i++) {
       nebulaParticles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 120 + 60,
+        radius: Math.random() * 3 + 1,
         opacity: Math.random() * 0.15 + 0.05,
+        speed: Math.random() * 0.08 + 0.02,
+        angle: Math.random() * Math.PI * 2,
         color:
-          i % 3 === 0
-            ? 'rgba(138, 43, 226, 0.4)'
-            : i % 3 === 1
-            ? 'rgba(0, 191, 255, 0.3)'
-            : 'rgba(255, 0, 255, 0.35)',
-        driftX: (Math.random() - 0.5) * 0.1,
-        driftY: (Math.random() - 0.5) * 0.1,
-        pulseSpeed: Math.random() * 0.008 + 0.002,
+          Math.random() > 0.5
+            ? 'rgba(96, 165, 250, 0.1)'
+            : 'rgba(59, 130, 246, 0.1)',
       });
     }
 
-    // Floating light particles
-    const floatingLights = [];
-    for (let i = 0; i < 25; i++) {
-      floatingLights.push({
+    // Comet trails - occasional streaks
+    const comets = [];
+    for (let i = 0; i < 5; i++) {
+      comets.push({
         x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 4 + 2,
-        opacity: 0,
-        color:
-          i % 3 === 0
-            ? 'rgba(0, 191, 255, 0.9)'
-            : i % 3 === 1
-            ? 'rgba(138, 43, 226, 0.9)'
-            : 'rgba(255, 0, 255, 0.9)',
-        speed: Math.random() * 0.3 + 0.1,
-        angle: Math.random() * Math.PI * 2,
-        lifespan: Math.random() * 300 + 200,
-        age: 0,
+        y: Math.random() * canvas.height * 0.3,
+        speed: Math.random() * 0.5 + 0.3,
+        angle: Math.PI * 0.75 + Math.random() * 0.5,
+        length: Math.random() * 50 + 30,
+        opacity: Math.random() * 0.6 + 0.4,
+        active: false,
+        timer: 0,
+      });
+    }
+
+    // Holographic grid - subtle futuristic lines
+    const gridLines = [];
+    const gridSpacing = 100;
+    for (let x = 0; x < canvas.width; x += gridSpacing) {
+      gridLines.push({
+        x,
+        type: 'vertical',
+        offset: Math.random() * 30,
+        glow: Math.random() * 0.1,
+      });
+    }
+    for (let y = 0; y < canvas.height; y += gridSpacing) {
+      gridLines.push({
+        y,
+        type: 'horizontal',
+        offset: Math.random() * 30,
+        glow: Math.random() * 0.1,
       });
     }
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.01;
-
-      // Draw large planet on left side
-      const planetX = canvas.width * 0.15;
-      const planetY = canvas.height * 0.35;
-      const planetRadius = 180;
-      const planetPulse = Math.sin(time * 0.5) * 0.05 + 1;
-
-      // Planet glow
-      const planetGlow = ctx.createRadialGradient(
-        planetX,
-        planetY,
-        planetRadius * 0.5,
-        planetX,
-        planetY,
-        planetRadius * 1.8
+      // Galaxy nebula background gradient with blue tones
+      const bgGradient = ctx.createLinearGradient(
+        0,
+        0,
+        canvas.width * 0.3,
+        canvas.height
       );
-      planetGlow.addColorStop(0, 'rgba(138, 43, 226, 0)');
-      planetGlow.addColorStop(0.5, 'rgba(138, 43, 226, 0.15)');
-      planetGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = planetGlow;
-      ctx.beginPath();
-      ctx.arc(
-        planetX,
-        planetY,
-        planetRadius * 1.8 * planetPulse,
+      bgGradient.addColorStop(0, '#0a0e1a');
+      bgGradient.addColorStop(0.3, '#0f1419');
+      bgGradient.addColorStop(0.6, '#0a0e1a');
+      bgGradient.addColorStop(1, '#000011');
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle nebula overlay blue
+      const nebulaOverlay = ctx.createRadialGradient(
+        canvas.width * 0.7,
+        canvas.height * 0.4,
         0,
-        Math.PI * 2
+        canvas.width * 0.7,
+        canvas.height * 0.4,
+        canvas.width * 0.6
       );
-      ctx.fill();
+      nebulaOverlay.addColorStop(0, 'rgba(96, 165, 250, 0.08)');
+      nebulaOverlay.addColorStop(0.4, 'rgba(59, 130, 246, 0.05)');
+      nebulaOverlay.addColorStop(1, 'rgba(0, 0, 17, 0)');
+      ctx.fillStyle = nebulaOverlay;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Planet body
-      const planetGradient = ctx.createRadialGradient(
-        planetX - planetRadius * 0.3,
-        planetY - planetRadius * 0.3,
-        0,
-        planetX,
-        planetY,
-        planetRadius
-      );
-      planetGradient.addColorStop(0, 'rgba(150, 100, 255, 0.7)');
-      planetGradient.addColorStop(0.4, 'rgba(100, 50, 200, 0.6)');
-      planetGradient.addColorStop(0.7, 'rgba(50, 20, 100, 0.5)');
-      planetGradient.addColorStop(1, 'rgba(20, 10, 50, 0.3)');
+      time += 0.008;
 
-      ctx.fillStyle = planetGradient;
-      ctx.beginPath();
-      ctx.arc(planetX, planetY, planetRadius * planetPulse, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Planet rings
-      ctx.save();
-      ctx.translate(planetX, planetY);
-      ctx.rotate(Math.PI / 6);
-      ctx.scale(1, 0.3);
-      const ringGradient = ctx.createRadialGradient(
-        0,
-        0,
-        planetRadius * 1.2,
-        0,
-        0,
-        planetRadius * 2
-      );
-      ringGradient.addColorStop(0, 'rgba(138, 43, 226, 0)');
-      ringGradient.addColorStop(0.3, 'rgba(138, 43, 226, 0.3)');
-      ringGradient.addColorStop(0.5, 'rgba(100, 50, 200, 0.2)');
-      ringGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = ringGradient;
-      ctx.beginPath();
-      ctx.arc(0, 0, planetRadius * 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // Draw floating light particles
-      floatingLights.forEach(light => {
-        light.age++;
-        light.x += Math.cos(light.angle) * light.speed;
-        light.y += Math.sin(light.angle) * light.speed;
-
-        // Fade in and out based on lifespan
-        if (light.age < 50) {
-          light.opacity = light.age / 50;
-        } else if (light.age > light.lifespan - 50) {
-          light.opacity = (light.lifespan - light.age) / 50;
+      // Holographic grid with subtle glow
+      ctx.strokeStyle = 'rgba(96, 165, 250, 0.06)';
+      ctx.lineWidth = 0.8;
+      ctx.shadowColor = 'rgba(96, 165, 250, 0.2)';
+      ctx.shadowBlur = 4;
+      gridLines.forEach(line => {
+        if (line.type === 'vertical') {
+          const wave = Math.sin(time * 2 + line.offset) * 3;
+          ctx.beginPath();
+          ctx.moveTo(line.x + wave, 0);
+          ctx.lineTo(line.x + wave, canvas.height);
+          ctx.stroke();
         } else {
-          light.opacity = 1;
+          const wave = Math.sin(time * 2 + line.offset) * 3;
+          ctx.beginPath();
+          ctx.moveTo(0, line.y + wave);
+          ctx.lineTo(canvas.width, line.y + wave);
+          ctx.stroke();
         }
-
-        // Reset particle
-        if (light.age > light.lifespan) {
-          light.x = Math.random() * canvas.width;
-          light.y = Math.random() * canvas.height;
-          light.age = 0;
-          light.angle = Math.random() * Math.PI * 2;
-        }
-
-        // Draw light with glow
-        const lightGradient = ctx.createRadialGradient(
-          light.x,
-          light.y,
-          0,
-          light.x,
-          light.y,
-          light.radius * 2
-        );
-        lightGradient.addColorStop(
-          0,
-          light.color.replace(/[\d.]+\)$/, `${light.opacity})`)
-        );
-        lightGradient.addColorStop(
-          0.5,
-          light.color.replace(/[\d.]+\)$/, `${light.opacity * 0.5})`)
-        );
-        lightGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-        ctx.fillStyle = lightGradient;
-        ctx.beginPath();
-        ctx.arc(light.x, light.y, light.radius * 2, 0, Math.PI * 2);
-        ctx.fill();
       });
+      ctx.shadowBlur = 0;
 
-      // Draw regular stars with slow drift
+      // Animate and draw moving stars with twinkle
       stars.forEach(star => {
-        star.x += star.driftX;
-        star.y += star.driftY;
+        // Slow drift movement
+        star.x += Math.cos(star.driftAngle) * star.driftSpeed;
+        star.y += Math.sin(star.driftAngle) * star.driftSpeed;
 
-        // Wrap around screen
         if (star.x < 0) star.x = canvas.width;
         if (star.x > canvas.width) star.x = 0;
         if (star.y < 0) star.y = canvas.height;
         if (star.y > canvas.height) star.y = 0;
 
-        star.opacity += (Math.random() - 0.5) * star.twinkleSpeed;
-        star.opacity = Math.max(0.2, Math.min(1, star.opacity));
+        const twinkle =
+          Math.sin(time * star.twinkleSpeed + star.angle) * 0.5 + 0.5;
+        star.baseOpacity += (twinkle - star.baseOpacity) * 0.05; // Smooth twinkle
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.baseOpacity})`;
+        ctx.shadowColor = 'rgba(96, 165, 250, 0.4)';
+        ctx.shadowBlur = star.radius * 2;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
       });
 
-      // Draw bright stars with cross flare
-      brightStars.forEach(star => {
-        const pulse = Math.sin(time * star.pulseSpeed) * 0.3 + 0.7;
+      // Animate nebula particles
+      nebulaParticles.forEach(particle => {
+        particle.x += Math.cos(particle.angle) * particle.speed;
+        particle.y += Math.sin(particle.angle) * particle.speed;
 
-        // Glow
-        const starGradient = ctx.createRadialGradient(
-          star.x,
-          star.y,
-          0,
-          star.x,
-          star.y,
-          star.size * 4
-        );
-        starGradient.addColorStop(
-          0,
-          star.color.replace(
-            /#(.{2})(.{2})(.{2})/,
-            (_, r, g, b) =>
-              `rgba(${parseInt(r, 16)}, ${parseInt(g, 16)}, ${parseInt(
-                b,
-                16
-              )}, ${star.opacity * pulse})`
-          )
-        );
-        starGradient.addColorStop(
-          0.5,
-          star.color.replace(
-            /#(.{2})(.{2})(.{2})/,
-            (_, r, g, b) =>
-              `rgba(${parseInt(r, 16)}, ${parseInt(g, 16)}, ${parseInt(
-                b,
-                16
-              )}, ${star.opacity * pulse * 0.3})`
-          )
-        );
-        starGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
 
-        ctx.fillStyle = starGradient;
+        ctx.fillStyle = particle.color;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size * 4, 0, Math.PI * 2);
+        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
         ctx.fill();
+      });
 
-        // Core
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * pulse})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size * pulse, 0, Math.PI * 2);
-        ctx.fill();
+      // Animate comets
+      comets.forEach(comet => {
+        if (Math.random() < 0.005) comet.active = true; // Random activation
+        if (comet.active) {
+          comet.timer++;
+          comet.x += Math.cos(comet.angle) * comet.speed;
+          comet.y += Math.sin(comet.angle) * comet.speed;
 
-        // Cross flare
-        ctx.strokeStyle = `rgba(255, 255, 255, ${star.opacity * pulse * 0.6})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(star.x - star.size * 6, star.y);
-        ctx.lineTo(star.x + star.size * 6, star.y);
-        ctx.moveTo(star.x, star.y - star.size * 6);
-        ctx.lineTo(star.x, star.y + star.size * 6);
-        ctx.stroke();
+          // Draw trail
+          ctx.strokeStyle = `rgba(96, 165, 250, ${
+            comet.opacity * (1 - comet.timer / 100)
+          })`;
+          ctx.lineWidth = 2;
+          ctx.shadowColor = 'rgba(96, 165, 250, 0.5)';
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.moveTo(comet.x, comet.y);
+          ctx.lineTo(
+            comet.x - Math.cos(comet.angle) * comet.length,
+            comet.y - Math.sin(comet.angle) * comet.length
+          );
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+
+          if (comet.timer > 100) {
+            comet.active = false;
+            comet.timer = 0;
+          }
+        }
       });
 
       animationFrameId = requestAnimationFrame(animate);
@@ -411,25 +333,17 @@ export default function HeroSection() {
   return (
     <>
       <section className="lg:mt-3 relative w-full min-h-screen overflow-hidden py-16">
-        {/* Animated Galaxy Canvas Background */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full"
-          style={{
-            background:
-              'linear-gradient(to bottom, #000814 0%, #001233 50%, #000814 100%)',
-          }}
-        />
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-16 h-full relative z-10 ">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 h-full items-center py-4">
             {/* LEFT — Content */}
             <div className="animate-fadeInLeft opacity-0 relative flex flex-col justify-center h-full">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-[1.1] mb-6">
-                <span className="block text-white/90 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-[1.5] mb-6">
+                <span className="block text-white/90 drop-shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
                   Dedicated bootcamp
                 </span>
-                <span className="block mt-2 text-white/90 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                <span className="block mt-2 text-white/90 drop-shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
                   for complete private bank
                 </span>
 
@@ -438,12 +352,10 @@ export default function HeroSection() {
              font-bold leading-[1.1]
              bg-gradient-to-r from-yellow-500 via-amber-300 to-amber-500
              bg-clip-text text-transparent
-             drop-shadow-[0_0_40px_rgba(255,215,0,0.35)]
+             drop-shadow-[0_2px_10px_rgba(251,191,36,0.15)]
              min-h-[1.2em]"
                 >
                   {typewriterText}
-
-                  {/* Blinking cursor without external CSS */}
                   <span
                     style={{
                       display: 'inline-block',
@@ -456,11 +368,11 @@ export default function HeroSection() {
                 </span>
               </h1>
               <div className="animate-fadeInUp-delay2 opacity-0 flex flex-col sm:flex-row gap-4 mb-6">
-                <button className="group relative px-6 py-3 rounded-3xl overflow-hidden font-semibold text-sm sm:text-base bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-500 text-[#030712] shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all hover:shadow-[0_0_60px_rgba(6,182,212,0.6)] hover:scale-105">
+                <button className="group relative px-6 py-3 rounded-3xl overflow-hidden font-semibold text-sm sm:text-base bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-500 text-[#030712] shadow-[0_4px_20px_rgba(6,182,212,0.25)] transition-all hover:shadow-[0_6px_30px_rgba(6,182,212,0.35)] hover:scale-105">
                   <span className="relative flex items-center justify-center gap-2">
                     <Zap className="w-4 h-4 sm:w-5 sm:h-5" /> Start Free Model
                     Test
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover-translate transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate transition-transform" />
                   </span>
                 </button>
                 <button className="px-6 py-3 rounded-3xl font-semibold text-sm sm:text-base border border-white/20 bg-white/[0.08] backdrop-blur-xl text-white shadow-lg hover:border-white/30 hover:bg-white/10 transition-all hover:scale-105">
@@ -517,9 +429,7 @@ export default function HeroSection() {
             {/* RIGHT — Video */}
             <div className="animate-fadeInRight opacity-0 relative w-full flex items-center justify-center">
               <div className="relative w-full max-w-2xl mx-auto">
-                {/* Removed the shimmer div that was here */}
-
-                <div className="relative w-full h-[280px] sm:h-[320px] lg:h-[360px] xl:h-[400px] bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.04] border border-white/20 backdrop-blur-2xl shadow-[0_0_80px_rgba(6,182,212,0.3)] rounded-2xl overflow-hidden">
+                <div className="relative w-full h-[280px] sm:h-[320px] lg:h-[360px] xl:h-[400px] bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.04] border border-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] rounded-2xl overflow-hidden">
                   <div className="absolute top-3 left-3 z-20 px-2 py-1 text-xs font-semibold bg-gradient-to-r from-black/70 to-black/50 backdrop-blur-xl border border-white/20 rounded-lg text-white shadow-lg">
                     <span className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -566,7 +476,7 @@ export default function HeroSection() {
               <div className="animate-fadeInUp-delay4 opacity-0 flex flex-col lg:flex-row items-start lg:items-center gap-6">
                 {/* LEFT SIDE – HEADER */}
                 <div className="flex items-center gap-4 flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 via-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30 pulse-glow">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 via-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
                     <Briefcase className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -581,8 +491,8 @@ export default function HeroSection() {
 
                 {/* RIGHT SIDE – SCROLLING CIRCULARS */}
                 <div className="relative flex-1 min-w-0 w-full">
-                  <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#000814] via-[#000814]/95 to-transparent z-10 pointer-events-none" />
-                  <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#000814] via-[#000814]/95 to-transparent z-10 pointer-events-none" />
+                  <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[#0a0e1a] via-[#0a0e1a]/95 to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#0a0e1a] via-[#0a0e1a]/95 to-transparent z-10 pointer-events-none" />
 
                   <div className="overflow-hidden">
                     <div className="scroll-circulars flex gap-4">
@@ -590,7 +500,7 @@ export default function HeroSection() {
                         (circular, index) => (
                           <div
                             key={index}
-                            className="group relative flex-shrink-0 w-72 h-24 p-4 rounded-xl bg-gradient-to-br from-white/8 to-white/[0.03] border border-white/15 hover:border-cyan-500/40 transition-all cursor-pointer hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-cyan-500/20"
+                            className="group relative flex-shrink-0 w-72 h-24 p-4 rounded-xl bg-gradient-to-br from-white/8 to-white/[0.03] border border-white/15 hover:border-cyan-500/40 transition-all cursor-pointer hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-cyan-500/15"
                           >
                             <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 rounded-xl transition-opacity" />
                             <div className="relative flex items-start justify-between h-full">
@@ -604,7 +514,7 @@ export default function HeroSection() {
                                     {circular.posts} posts
                                   </span>
                                 </div>
-                                <h3 className="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-1 mb-2 leading-snug">
+                                <h3 className="text-sm font-bold text-white/70 group-hover:text-cyan-400 transition-colors line-clamp-1 mb-2 leading-snug">
                                   {circular.title}
                                 </h3>
                                 <span className="text-xs text-white/50 px-3 py-1 rounded-full bg-white/10 border border-white/15 inline-block">
@@ -668,11 +578,6 @@ export default function HeroSection() {
           50% { opacity: 0; }
         }
 
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(6, 182, 212, 0.6); }
-        }
-
         .animate-fadeInLeft { animation: fadeInLeft 0.8s ease-out forwards; }
         .animate-fadeInRight { animation: fadeInRight 0.8s ease-out 0.2s forwards; }
         .animate-fadeInUp-delay2 { animation: fadeInUp 0.8s ease-out 0.5s forwards; }
@@ -680,8 +585,6 @@ export default function HeroSection() {
         .animate-fadeInUp-delay4 { animation: fadeInUp 0.6s ease-out 1s forwards; }
         
         .scroll-circulars { animation: scroll 30s linear infinite; }
-        .cursor-blink { animation: blink 1s step-end infinite; }
-        .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
         
         .group:hover .group-hover-translate { transform: translateX(4px); }
       `}</style>
