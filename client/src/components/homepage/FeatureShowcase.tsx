@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Target, Users, BarChart3 } from 'lucide-react';
+import { BookOpen, Target, Users, BarChart3, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function FeatureShowcase() {
@@ -15,125 +15,146 @@ export default function FeatureShowcase() {
     {
       icon: BookOpen,
       title: 'Updated Study Content',
-      desc: '1000+ video lessons, PDF notes, and practice questions covering all major private banks - BRAC Bank, DBBL, City Bank, Eastern Bank, Prime Bank, and more.',
+      desc: '1000+ video lessons, PDF notes, and practice questions covering all major private banks including BRAC Bank, DBBL, City Bank, and more.',
       badge: 'Bilingual',
-      color: 'from-cyan-400 to-blue-500',
     },
     {
       icon: Target,
       title: 'Bank-Specific Mock Tests',
-      desc: '50+ full-length mock exams replicating actual bank recruitment patterns. Practice MCQ, written, and analytical sections with instant results.',
+      desc: '50+ full-length mock exams aligned with real recruitment patterns. MCQ, written, and analytical sections included.',
       badge: 'Updated 2025',
-      color: 'from-emerald-400 to-teal-500',
     },
     {
       icon: Users,
       title: 'Expert-Led Sessions',
-      desc: 'Daily live classes by former bankers and exam toppers. Clear doubts in real-time and learn exam strategies from industry professionals.',
+      desc: 'Daily live classes by former bankers and exam toppers with real-time doubt clearing and proven strategies.',
       badge: 'Interactive',
-      color: 'from-amber-400 to-orange-500',
     },
     {
       icon: BarChart3,
       title: 'Smart Analytics Dashboard',
-      desc: 'Track your preparation progress, identify weak areas, and get personalized recommendations to improve faster than competition.',
+      desc: 'Track performance, identify weak areas, and get personalized recommendations to improve faster.',
       badge: 'AI-Powered',
-      color: 'from-violet-400 to-purple-500',
     },
   ];
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-violet-500/5 rounded-full blur-[150px]" />
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-[#0A0A0C] overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[520px] h-[520px] bg-[#C49B4B]/[0.035] rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[420px] h-[420px] bg-[#C49B4B]/[0.025] rounded-full blur-[120px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl relative z-10">
-        {/* Header Section */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center space-y-5 mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-3xl mx-auto mb-14 space-y-5"
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-            Everything You Need to{' '}
-            <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(6,182,212,0.4)]">
-              Succeed
+          <div
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+            bg-[#C49B4B]/10 border border-[#C49B4B]/20 mx-auto"
+          >
+            <Sparkles className="w-4 h-4 text-[#C49B4B]" />
+            <span className="text-sm font-semibold text-[#D4AF5A]">
+              Why Choose Us
             </span>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+            Everything You Need to{' '}
+            <span className="text-gradient-gold">Succeed</span>
           </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto font-light">
-            A complete preparation ecosystem designed for Bangladesh's private
-            bank exams
+
+          <p className="text-lg text-white/40">
+            A complete preparation ecosystem for private bank exams
           </p>
         </motion.div>
 
-        {/* Features Grid */}
+        {/* Feature Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="group relative h-full"
-              >
+              <div className="group relative h-full">
+                {/* Hover glow */}
                 <div
-                  className={`absolute -inset-1 bg-gradient-to-r ${feature.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`}
+                  className="pointer-events-none absolute -inset-px rounded-2xl
+                  bg-gradient-to-r from-[#C49B4B]/15 to-[#D4AF5A]/10
+                  opacity-0 group-hover:opacity-100
+                  blur-xl transition-opacity duration-500"
                 />
-                <Card className="relative h-full bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.03] backdrop-blur-2xl border border-white/20 group-hover:border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300">
-                  <CardHeader className="p-7 space-y-5">
+
+                <Card
+                  className="
+                    relative h-full rounded-2xl
+                    border border-white/[0.06]
+                    bg-[linear-gradient(165deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))]
+                    transition-all duration-300
+                    group-hover:border-[#C49B4B]/30
+                    group-hover:shadow-[0_12px_40px_-18px_rgba(196,155,75,0.4)]
+                  "
+                >
+                  <CardHeader className="p-6 space-y-4">
                     {/* Icon */}
-                    <motion.div
-                      whileHover={{ rotate: 10, scale: 1.1 }}
-                      className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center transition-transform duration-300 shadow-lg`}
+                    <div
+                      className="w-12 h-12 rounded-xl
+                      bg-[#C49B4B]/10 border border-[#C49B4B]/15
+                      flex items-center justify-center"
                     >
-                      <feature.icon className="h-7 w-7 text-white" strokeWidth={2} />
-                    </motion.div>
+                      <feature.icon className="w-6 h-6 text-[#C49B4B]" />
+                    </div>
 
                     {/* Badge */}
-                    <Badge className={`w-fit text-xs font-medium px-3 py-1 rounded-md bg-gradient-to-r ${feature.color} text-white border-0`}>
+                    <Badge
+                      className="w-fit text-xs px-3 py-1
+                      bg-[#C49B4B]/10 text-[#D4AF5A]
+                      border border-[#C49B4B]/20"
+                    >
                       {feature.badge}
                     </Badge>
 
                     {/* Title */}
-                    <CardTitle className="text-xl font-semibold text-white leading-snug group-hover:text-cyan-400 transition-colors">
+                    <CardTitle
+                      className="text-lg font-semibold text-white
+                      transition-colors duration-300
+                      group-hover:text-[#D4AF5A]"
+                    >
                       {feature.title}
                     </CardTitle>
 
                     {/* Description */}
-                    <CardDescription className="text-sm text-white/60 leading-relaxed font-normal">
+                    <CardDescription className="text-sm text-white/35 leading-relaxed">
                       {feature.desc}
                     </CardDescription>
                   </CardHeader>
                 </Card>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button className="bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-500 hover:from-cyan-400 hover:via-cyan-300 hover:to-blue-400 text-[#030712] font-semibold px-12 py-6 text-base rounded-2xl shadow-[0_0_40px_rgba(6,182,212,0.4)] hover:shadow-[0_0_60px_rgba(6,182,212,0.6)] transition-all duration-300">
-              Get Started Today
-            </Button>
-          </motion.div>
-          <p className="mt-6 text-sm text-white/50">
+          <Button className="btn-premium text-base shadow-md hover:opacity-90">
+            Get Started Today
+          </Button>
+          <p className="mt-4 text-sm text-white/25">
             Free 7-day trial • No credit card required
           </p>
         </motion.div>

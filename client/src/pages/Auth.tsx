@@ -1,10 +1,294 @@
+// import { useState } from 'react';
+// import { useSearchParams, useNavigate, Link } from 'react-router-dom';
+// import { useAuth } from '@/contexts/AuthContext';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+// import { BookOpen, Mail, Lock, User, Phone } from 'lucide-react';
+// import { toast } from 'sonner';
+
+// const Auth = () => {
+//   const [searchParams] = useSearchParams();
+//   const navigate = useNavigate();
+//   const { login, register } = useAuth();
+//   const defaultMode = searchParams.get('mode') === 'signup' ? 'signup' : 'login';
+
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [loginData, setLoginData] = useState({ email: '', password: '' });
+//   const [signupData, setSignupData] = useState({
+//     name: '',
+//     firstName: '',
+//     lastName: '',
+//     email: '',
+//     phone: '',
+//     password: '',
+//     confirmPassword: '',
+//   });
+
+//   const handleLogin = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setIsLoading(true);
+
+//     try {
+//       await login({
+//         email: loginData.email,
+//         password: loginData.password,
+//       });
+
+//       navigate('/dashboard');
+//     } catch (error) {
+//       console.error('Login error:', error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   const handleSignup = async (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     if (signupData.password !== signupData.confirmPassword) {
+//       toast.error('Passwords do not match');
+//       return;
+//     }
+
+//     if (signupData.password.length < 8) {
+//       toast.error('Password must be at least 8 characters');
+//       return;
+//     }
+
+//     // Validate phone number format (Bangladeshi)
+//     const phoneRegex = /^(\+8801|01)[3-9]\d{8}$/;
+//     if (!phoneRegex.test(signupData.phone)) {
+//       toast.error('Please enter a valid Bangladeshi phone number (e.g., 01712345678)');
+//       return;
+//     }
+
+//     // Parse the full name into firstName and lastName
+//     const nameParts = signupData.name.trim().split(' ');
+//     if (nameParts.length < 2 || !nameParts[1]) {
+//       toast.error('Please enter your full name (first and last name)');
+//       return;
+//     }
+
+//     setIsLoading(true);
+
+//     try {
+//       const firstName = nameParts[0];
+//       const lastName = nameParts.slice(1).join(' ');
+
+//       await register({
+//         firstName,
+//         lastName,
+//         email: signupData.email,
+//         phone: signupData.phone,
+//         password: signupData.password,
+//       });
+
+//       navigate('/dashboard');
+//     } catch (error) {
+//       console.error('Signup error:', error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+//       <div className="w-full max-w-md">
+//         <div className="text-center mb-8">
+//           <Link to="/" className="inline-flex items-center space-x-2 mb-4">
+//             <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center">
+//               <BookOpen className="w-7 h-7 text-white" />
+//             </div>
+//             <span className="text-2xl font-bold">Private Bank Bootcamp</span>
+//           </Link>
+//           <p className="text-muted-foreground">Start your journey to success</p>
+//         </div>
+
+//         <Tabs defaultValue={defaultMode} className="w-full">
+//           <TabsList className="grid w-full grid-cols-2">
+//             <TabsTrigger value="login">Login</TabsTrigger>
+//             <TabsTrigger value="signup">Sign Up</TabsTrigger>
+//           </TabsList>
+
+//           <TabsContent value="login">
+//             <Card>
+//               <CardHeader>
+//                 <CardTitle>Welcome Back</CardTitle>
+//                 <CardDescription>Login to access your dashboard and continue practicing</CardDescription>
+//               </CardHeader>
+//               <CardContent>
+//                 <form onSubmit={handleLogin} className="space-y-4">
+//                   <div className="space-y-2">
+//                     <Label htmlFor="login-email">Email or Phone</Label>
+//                     <div className="relative">
+//                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="login-email"
+//                         type="text"
+//                         placeholder="Enter your email or phone"
+//                         className="pl-10"
+//                         value={loginData.email}
+//                         onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="space-y-2">
+//                     <Label htmlFor="login-password">Password</Label>
+//                     <div className="relative">
+//                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="login-password"
+//                         type="password"
+//                         placeholder="Enter your password"
+//                         className="pl-10"
+//                         value={loginData.password}
+//                         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="flex items-center justify-between text-sm">
+//                     <a href="#" className="text-primary hover:underline">
+//                       Forgot password?
+//                     </a>
+//                   </div>
+
+//                   <Button type="submit" className="w-full" disabled={isLoading}>
+//                     {isLoading ? 'Logging in...' : 'Login'}
+//                   </Button>
+//                 </form>
+//               </CardContent>
+//             </Card>
+//           </TabsContent>
+
+//           <TabsContent value="signup">
+//             <Card>
+//               <CardHeader>
+//                 <CardTitle>Create Account</CardTitle>
+//                 <CardDescription>Join thousands of students preparing for their dream bank job</CardDescription>
+//               </CardHeader>
+//               <CardContent>
+//                 <form onSubmit={handleSignup} className="space-y-4">
+//                   <div className="space-y-2">
+//                     <Label htmlFor="signup-name">Full Name</Label>
+//                     <div className="relative">
+//                       <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="signup-name"
+//                         type="text"
+//                         placeholder="Enter your full name (e.g., John Doe)"
+//                         className="pl-10"
+//                         value={signupData.name}
+//                         onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="space-y-2">
+//                     <Label htmlFor="signup-email">Email</Label>
+//                     <div className="relative">
+//                       <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="signup-email"
+//                         type="email"
+//                         placeholder="Enter your email"
+//                         className="pl-10"
+//                         value={signupData.email}
+//                         onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="space-y-2">
+//                     <Label htmlFor="signup-phone">Phone Number</Label>
+//                     <div className="relative">
+//                       <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="signup-phone"
+//                         type="tel"
+//                         placeholder="01712345678"
+//                         className="pl-10"
+//                         value={signupData.phone}
+//                         onChange={(e) => setSignupData({ ...signupData, phone: e.target.value })}
+//                         required
+//                         pattern="(\+8801|01)[3-9]\d{8}"
+//                         title="Please enter a valid Bangladeshi phone number (e.g., 01712345678)"
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="space-y-2">
+//                     <Label htmlFor="signup-password">Password</Label>
+//                     <div className="relative">
+//                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="signup-password"
+//                         type="password"
+//                         placeholder="Create a password (min. 8 characters)"
+//                         className="pl-10"
+//                         value={signupData.password}
+//                         onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
+//                         required
+//                         minLength={8}
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <div className="space-y-2">
+//                     <Label htmlFor="signup-confirm-password">Confirm Password</Label>
+//                     <div className="relative">
+//                       <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                       <Input
+//                         id="signup-confirm-password"
+//                         type="password"
+//                         placeholder="Confirm your password"
+//                         className="pl-10"
+//                         value={signupData.confirmPassword}
+//                         onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+
+//                   <Button type="submit" className="w-full" disabled={isLoading}>
+//                     {isLoading ? 'Creating account...' : 'Create Account'}
+//                   </Button>
+
+//                   <p className="text-xs text-center text-muted-foreground">
+//                     By signing up, you agree to our Terms of Service and Privacy Policy
+//                   </p>
+//                 </form>
+//               </CardContent>
+//             </Card>
+//           </TabsContent>
+//         </Tabs>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Auth;
 import { useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookOpen, Mail, Lock, User, Phone } from 'lucide-react';
 import { toast } from 'sonner';
@@ -13,14 +297,13 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { login, register } = useAuth();
-  const defaultMode = searchParams.get('mode') === 'signup' ? 'signup' : 'login';
-  
+  const defaultMode =
+    searchParams.get('mode') === 'signup' ? 'signup' : 'login';
+
   const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({
     name: '',
-    firstName: '',
-    lastName: '',
     email: '',
     phone: '',
     password: '',
@@ -30,16 +313,12 @@ const Auth = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
     try {
-      await login({
-        email: loginData.email,
-        password: loginData.password,
-      });
-      
+      await login({ email: loginData.email, password: loginData.password });
       navigate('/dashboard');
     } catch (error) {
-      console.error('Login error:', error);
+      console.error(error);
+      toast.error('Invalid credentials');
     } finally {
       setIsLoading(false);
     }
@@ -47,37 +326,30 @@ const Auth = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (signupData.password !== signupData.confirmPassword) {
       toast.error('Passwords do not match');
       return;
     }
-
     if (signupData.password.length < 8) {
       toast.error('Password must be at least 8 characters');
       return;
     }
-
-    // Validate phone number format (Bangladeshi)
     const phoneRegex = /^(\+8801|01)[3-9]\d{8}$/;
     if (!phoneRegex.test(signupData.phone)) {
-      toast.error('Please enter a valid Bangladeshi phone number (e.g., 01712345678)');
+      toast.error('Enter a valid Bangladeshi phone number');
       return;
     }
 
-    // Parse the full name into firstName and lastName
     const nameParts = signupData.name.trim().split(' ');
-    if (nameParts.length < 2 || !nameParts[1]) {
-      toast.error('Please enter your full name (first and last name)');
+    if (nameParts.length < 2) {
+      toast.error('Enter full name (first & last)');
       return;
     }
 
     setIsLoading(true);
-
     try {
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(' ');
-
       await register({
         firstName,
         lastName,
@@ -85,81 +357,130 @@ const Auth = () => {
         phone: signupData.phone,
         password: signupData.password,
       });
-
       navigate('/dashboard');
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error(error);
+      toast.error('Signup failed');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-[#0A0A0C]">
       <div className="w-full max-w-md">
+        {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center space-x-2 mb-4">
-            <div className="w-12 h-12 gradient-primary rounded-lg flex items-center justify-center">
+          <Link to="/" className="inline-flex items-center space-x-2">
+            <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-[#A7823D]/70 to-[#A7823D]/40 shadow-lg">
               <BookOpen className="w-7 h-7 text-white" />
             </div>
-            <span className="text-2xl font-bold">Private Bank Bootcamp</span>
+            <span className="text-2xl font-bold text-white tracking-tight">
+              Private Bank Bootcamp
+            </span>
           </Link>
-          <p className="text-muted-foreground">Start your journey to success</p>
+          <p className="mt-2 text-[#D4AF5A]/80">
+            Start your journey to success
+          </p>
         </div>
 
+        {/* Tabs */}
         <Tabs defaultValue={defaultMode} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+          <TabsList
+            className="
+    grid grid-cols-2
+    bg-[#1A1A1A] border border-[#333]
+    rounded-xl
+    p-1
+    mb-6
+    transition-all duration-300
+  "
+          >
+            <TabsTrigger
+              value="login"
+              className="
+      text-white/70
+      data-[state=active]:bg-[#A7823D]
+      data-[state=active]:text-white
+      data-[state=active]:rounded-lg
+      transition-all duration-300
+    "
+            >
+              Login
+            </TabsTrigger>
+            <TabsTrigger
+              value="signup"
+              className="
+      text-white/70
+      data-[state=active]:bg-[#A7823D]
+      data-[state=active]:text-white
+      data-[state=active]:rounded-lg
+      transition-all duration-300
+    "
+            >
+              Sign Up
+            </TabsTrigger>
           </TabsList>
 
+          {/* Login */}
           <TabsContent value="login">
-            <Card>
+            <Card className="bg-[#111] border border-[#333] shadow-xl rounded-xl">
               <CardHeader>
-                <CardTitle>Welcome Back</CardTitle>
-                <CardDescription>Login to access your dashboard and continue practicing</CardDescription>
+                <CardTitle className="text-white">Welcome Back</CardTitle>
+                <CardDescription className="text-[#D4AF5A]/70">
+                  Login to continue practicing
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="login-email">Email or Phone</Label>
+                    <Label htmlFor="login-email" className="text-white/80">
+                      Email or Phone
+                    </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="login-email"
                         type="text"
-                        placeholder="Enter your email or phone"
-                        className="pl-10"
+                        placeholder="Enter email or phone"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={loginData.email}
-                        onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                        onChange={e =>
+                          setLoginData({ ...loginData, email: e.target.value })
+                        }
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="login-password">Password</Label>
+                    <Label htmlFor="login-password" className="text-white/80">
+                      Password
+                    </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="login-password"
                         type="password"
-                        placeholder="Enter your password"
-                        className="pl-10"
+                        placeholder="Enter password"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={loginData.password}
-                        onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                        onChange={e =>
+                          setLoginData({
+                            ...loginData,
+                            password: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-sm">
-                    <a href="#" className="text-primary hover:underline">
-                      Forgot password?
-                    </a>
-                  </div>
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#A7823D] hover:bg-[#D4AF5A]"
+                    disabled={isLoading}
+                  >
                     {isLoading ? 'Logging in...' : 'Login'}
                   </Button>
                 </form>
@@ -167,75 +488,102 @@ const Auth = () => {
             </Card>
           </TabsContent>
 
+          {/* Signup */}
           <TabsContent value="signup">
-            <Card>
+            <Card className="bg-[#111] border border-[#333] shadow-xl rounded-xl">
               <CardHeader>
-                <CardTitle>Create Account</CardTitle>
-                <CardDescription>Join thousands of students preparing for their dream bank job</CardDescription>
+                <CardTitle className="text-white">Create Account</CardTitle>
+                <CardDescription className="text-[#D4AF5A]/70">
+                  Join thousands of students preparing for their dream bank job
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSignup} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name">Full Name</Label>
+                    <Label htmlFor="signup-name" className="text-white/80">
+                      Full Name
+                    </Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <User className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="signup-name"
                         type="text"
-                        placeholder="Enter your full name (e.g., John Doe)"
-                        className="pl-10"
+                        placeholder="John Doe"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={signupData.name}
-                        onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+                        onChange={e =>
+                          setSignupData({ ...signupData, name: e.target.value })
+                        }
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-email" className="text-white/80">
+                      Email
+                    </Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="signup-email"
                         type="email"
                         placeholder="Enter your email"
-                        className="pl-10"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={signupData.email}
-                        onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
+                        onChange={e =>
+                          setSignupData({
+                            ...signupData,
+                            email: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-phone">Phone Number</Label>
+                    <Label htmlFor="signup-phone" className="text-white/80">
+                      Phone
+                    </Label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Phone className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="signup-phone"
                         type="tel"
                         placeholder="01712345678"
-                        className="pl-10"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={signupData.phone}
-                        onChange={(e) => setSignupData({ ...signupData, phone: e.target.value })}
+                        onChange={e =>
+                          setSignupData({
+                            ...signupData,
+                            phone: e.target.value,
+                          })
+                        }
                         required
                         pattern="(\+8801|01)[3-9]\d{8}"
-                        title="Please enter a valid Bangladeshi phone number (e.g., 01712345678)"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
+                    <Label htmlFor="signup-password" className="text-white/80">
+                      Password
+                    </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="signup-password"
                         type="password"
-                        placeholder="Create a password (min. 8 characters)"
-                        className="pl-10"
+                        placeholder="Min. 8 characters"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={signupData.password}
-                        onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
+                        onChange={e =>
+                          setSignupData({
+                            ...signupData,
+                            password: e.target.value,
+                          })
+                        }
                         required
                         minLength={8}
                       />
@@ -243,27 +591,42 @@ const Auth = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="signup-confirm-password">Confirm Password</Label>
+                    <Label
+                      htmlFor="signup-confirm-password"
+                      className="text-white/80"
+                    >
+                      Confirm Password
+                    </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-[#D4AF5A]/70" />
                       <Input
                         id="signup-confirm-password"
                         type="password"
                         placeholder="Confirm your password"
-                        className="pl-10"
+                        className="pl-10 bg-[#1A1A1A] text-white border border-[#333] focus:border-[#A7823D]"
                         value={signupData.confirmPassword}
-                        onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
+                        onChange={e =>
+                          setSignupData({
+                            ...signupData,
+                            confirmPassword: e.target.value,
+                          })
+                        }
                         required
                       />
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Creating account...' : 'Create Account'}
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#A7823D] hover:bg-[#D4AF5A]"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Creating...' : 'Sign Up'}
                   </Button>
 
-                  <p className="text-xs text-center text-muted-foreground">
-                    By signing up, you agree to our Terms of Service and Privacy Policy
+                  <p className="text-xs text-center text-[#D4AF5A]/70 mt-2">
+                    By signing up, you agree to our Terms of Service and Privacy
+                    Policy
                   </p>
                 </form>
               </CardContent>

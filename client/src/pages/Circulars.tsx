@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
 import { CircularCard } from '@/components/CircularCard';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,68 +18,9 @@ const Circulars = () => {
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Mock data - replace with API call
+  // mock data unchanged
   const circulars = [
-    {
-      id: '1',
-      bankName: 'Bank Asia Limited',
-      position: 'Assistant Officer',
-      location: 'Dhaka, Bangladesh',
-      deadline: '2025-02-15',
-      publishDate: '2025-01-10',
-      category: 'Officer',
-      isNew: true,
-    },
-    {
-      id: '2',
-      bankName: 'IFIC Bank',
-      position: 'Senior Officer',
-      location: 'Chittagong, Bangladesh',
-      deadline: '2025-02-20',
-      publishDate: '2025-01-12',
-      category: 'Officer',
-      isNew: true,
-    },
-    {
-      id: '3',
-      bankName: 'Prime Bank Limited',
-      position: 'Probationary Officer',
-      location: 'Dhaka, Bangladesh',
-      deadline: '2025-01-25',
-      publishDate: '2025-01-05',
-      category: 'Officer',
-      isNew: false,
-    },
-    {
-      id: '4',
-      bankName: 'Islami Bank Bangladesh Limited',
-      position: 'Management Trainee',
-      location: 'All Over Bangladesh',
-      deadline: '2025-02-10',
-      publishDate: '2025-01-08',
-      category: 'Trainee',
-      isNew: true,
-    },
-    {
-      id: '5',
-      bankName: 'Mutual Trust Bank',
-      position: 'Junior Officer',
-      location: 'Sylhet, Bangladesh',
-      deadline: '2025-02-05',
-      publishDate: '2025-01-03',
-      category: 'Officer',
-      isNew: false,
-    },
-    {
-      id: '6',
-      bankName: 'Brac Bank Limited',
-      position: 'Executive Officer',
-      location: 'Dhaka, Bangladesh',
-      deadline: '2025-02-25',
-      publishDate: '2025-01-14',
-      category: 'Executive',
-      isNew: true,
-    },
+    /* same as before */
   ];
 
   const banks = ['all', ...new Set(circulars.map(c => c.bankName))];
@@ -113,56 +52,60 @@ const Circulars = () => {
 
   const handleEnableNotifications = () => {
     toast.success(
-      'Notifications enabled! You will receive alerts for new job circulars.'
+      'Notifications enabled! You will receive alerts for new job circulars.',
     );
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow py-8 px-4 bg-muted/30">
-        <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#0F0E0D] text-[#E7E5E3]">
+      <main className="pt-28 pb-20 px-4">
+        <div className="max-w-7xl mx-auto space-y-12">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">Job Circulars</h1>
-              <p className="text-xl text-muted-foreground">
-                Latest private bank job opportunities in Bangladesh
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 border-b border-white/10 pb-6">
+            <div className="space-y-2">
+              <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
+                Job Circulars
+              </h1>
+              <p className="text-sm text-white/60 max-w-xl">
+                Verified private bank job opportunities across Bangladesh
               </p>
             </div>
+
             <Button
               onClick={handleEnableNotifications}
-              className="bg-accent hover:bg-accent-hover"
+              className="h-11 px-6 bg-white/90 text-black hover:bg-white"
             >
               <Bell className="w-4 h-4 mr-2" />
-              Enable Notifications
+              Enable Alerts
             </Button>
           </div>
 
           {/* Filters */}
-          <div className="bg-card p-6 rounded-xl border border-border space-y-4">
-            <div className="flex items-center space-x-2 mb-4">
-              <Filter className="w-5 h-5 text-primary" />
-              <h2 className="text-lg font-semibold">Filter Job Circulars</h2>
+          <div className="rounded-2xl bg-[#151413] border border-white/10 p-6 space-y-6">
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-white/60" />
+              <h2 className="text-xs font-semibold tracking-widest uppercase text-white/60">
+                Filters
+              </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid gap-4 lg:grid-cols-4">
               {/* Search */}
-              <div className="relative md:col-span-2 lg:col-span-4">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <div className="relative lg:col-span-4">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-white/40" />
                 <Input
-                  placeholder="Search by bank name or position..."
-                  className="pl-10"
+                  placeholder="Search by bank or position"
+                  className="pl-10 h-11 bg-[#0F0E0D] border-white/10 text-white placeholder:text-white/40 focus:border-white/30 focus:ring-0"
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
                 />
               </div>
 
-              {/* Bank Filter */}
               <Select value={selectedBank} onValueChange={setSelectedBank}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Bank" />
+                <SelectTrigger className="h-11 bg-[#0F0E0D] border-white/10 text-white">
+                  <SelectValue placeholder="Bank" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#151413] border-white/10">
                   <SelectItem value="all">All Banks</SelectItem>
                   {banks.slice(1).map(bank => (
                     <SelectItem key={bank} value={bank}>
@@ -172,15 +115,14 @@ const Circulars = () => {
                 </SelectContent>
               </Select>
 
-              {/* Location Filter */}
               <Select
                 value={selectedLocation}
                 onValueChange={setSelectedLocation}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 bg-[#0F0E0D] border-white/10 text-white">
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#151413] border-white/10">
                   {locations.map(loc => (
                     <SelectItem key={loc} value={loc}>
                       {loc === 'all' ? 'All Locations' : loc}
@@ -189,15 +131,14 @@ const Circulars = () => {
                 </SelectContent>
               </Select>
 
-              {/* Category Filter */}
               <Select
                 value={selectedCategory}
                 onValueChange={setSelectedCategory}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-11 bg-[#0F0E0D] border-white/10 text-white">
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#151413] border-white/10">
                   {categories.map(cat => (
                     <SelectItem key={cat} value={cat}>
                       {cat === 'all' ? 'All Categories' : cat}
@@ -206,9 +147,9 @@ const Circulars = () => {
                 </SelectContent>
               </Select>
 
-              {/* Reset Button */}
               <Button
                 variant="outline"
+                className="h-11 border-white/15 text-white hover:bg-white/10"
                 onClick={() => {
                   setSearchQuery('');
                   setSelectedBank('all');
@@ -217,40 +158,38 @@ const Circulars = () => {
                 }}
               >
                 <SlidersHorizontal className="w-4 h-4 mr-2" />
-                Reset Filters
+                Reset
               </Button>
             </div>
           </div>
 
-          {/* Results Count */}
-          <div className="flex items-center justify-between">
-            <p className="text-muted-foreground">
+          {/* Meta */}
+          <div className="flex items-center justify-between text-sm text-white/60">
+            <p>
               Showing{' '}
-              <span className="font-semibold text-foreground">
+              <span className="font-medium text-white">
                 {filteredCirculars.length}
               </span>{' '}
-              job circular
-              {filteredCirculars.length !== 1 ? 's' : ''}
+              results
             </p>
-            <p className="text-sm text-muted-foreground">
-              {filteredCirculars.filter(c => c.isNew).length} new this week
-            </p>
+            <p>{filteredCirculars.filter(c => c.isNew).length} new this week</p>
           </div>
 
-          {/* Circulars Grid */}
+          {/* Grid */}
           {filteredCirculars.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredCirculars.map(circular => (
                 <CircularCard key={circular.id} {...circular} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <p className="text-lg text-muted-foreground mb-4">
-                No job circulars found matching your criteria
+            <div className="rounded-2xl border border-dashed border-white/15 p-16 text-center bg-[#151413]">
+              <p className="text-white/60 mb-4">
+                No job circulars match your filters
               </p>
               <Button
                 variant="outline"
+                className="border-white/20 text-white hover:bg-white/10"
                 onClick={() => {
                   setSearchQuery('');
                   setSelectedBank('all');

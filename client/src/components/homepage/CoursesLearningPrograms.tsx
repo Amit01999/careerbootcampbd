@@ -26,7 +26,6 @@ export default function CoursesLearningPrograms() {
       students: '18,234',
       rating: 4.8,
       reviews: '3,456',
-      color: 'from-cyan-400 to-blue-500',
     },
     {
       title: 'PO Complete Preparation - Premium Program',
@@ -47,7 +46,6 @@ export default function CoursesLearningPrograms() {
       students: '12,567',
       rating: 4.9,
       reviews: '2,890',
-      color: 'from-emerald-400 to-teal-500',
     },
     {
       title: 'MTO/MT Complete Preparation - Elite Track',
@@ -69,15 +67,14 @@ export default function CoursesLearningPrograms() {
       students: '5,234',
       rating: 5.0,
       reviews: '1,234',
-      color: 'from-amber-400 to-orange-500',
     },
   ];
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0A0C]">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-violet-500/5 rounded-full blur-[150px]" />
+        <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-[#C49B4B]/[0.03] rounded-full blur-[100px]" />
       </div>
 
       <div className="mx-auto max-w-[1006px] relative z-10">
@@ -88,10 +85,10 @@ export default function CoursesLearningPrograms() {
           transition={{ duration: 0.6 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
             Complete Course Programs
           </h2>
-          <p className="text-lg text-white/60 max-w-3xl mx-auto">
+          <p className="text-lg text-white/40 max-w-3xl mx-auto">
             Structured learning paths for every private bank position
           </p>
         </motion.div>
@@ -110,15 +107,19 @@ export default function CoursesLearningPrograms() {
                 transition={{ type: 'spring', stiffness: 300 }}
                 className="group relative h-full"
               >
-                <div className={`absolute -inset-1 bg-gradient-to-r ${course.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-                <Card className="relative h-full bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.03] backdrop-blur-2xl border border-white/20 group-hover:border-white/30 shadow-xl hover:shadow-2xl transition-all duration-300">
-                  <div className="absolute top-4 right-4">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#C49B4B]/20 to-[#D4AF5A]/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <Card className="relative h-full border border-white/[0.06] group-hover:border-[#C49B4B]/20 shadow-xl transition-all duration-300"
+                  style={{
+                    background: 'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  }}
+                >
+                  <div className="absolute top-4 right-4 z-10">
                     {course.badge ? (
-                      <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white border-0 font-bold">
+                      <Badge className="bg-gradient-to-r from-[#C49B4B] to-[#D4AF5A] text-[#09090B] border-0 font-bold shadow-sm">
                         {course.badge}
                       </Badge>
                     ) : (
-                      <Badge className={`bg-gradient-to-r ${course.color} text-white border-0`}>
+                      <Badge className="bg-[#C49B4B]/10 text-[#D4AF5A] border border-[#C49B4B]/20 shadow-sm">
                         {course.duration}
                       </Badge>
                     )}
@@ -130,16 +131,16 @@ export default function CoursesLearningPrograms() {
                         <span className="text-3xl font-bold text-white">
                           {course.price}
                         </span>
-                        <span className="text-lg text-white/40 line-through">
+                        <span className="text-lg text-white/25 line-through">
                           {course.oldPrice}
                         </span>
                       </div>
-                      <Badge className="bg-emerald-500 text-white border-0">
+                      <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                         {course.discount}
                       </Badge>
                     </div>
 
-                    <CardTitle className="text-lg font-semibold mb-4 text-white group-hover:text-cyan-400 transition-colors">
+                    <CardTitle className="text-lg font-semibold mb-4 text-white group-hover:text-[#D4AF5A] transition-colors">
                       {course.title}
                     </CardTitle>
 
@@ -147,7 +148,7 @@ export default function CoursesLearningPrograms() {
                       {course.features.slice(0, 6).map((feature, j) => (
                         <div
                           key={j}
-                          className="flex items-start gap-2 text-sm text-white/70"
+                          className="flex items-start gap-2 text-sm text-white/40"
                         >
                           <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                           <span>{feature}</span>
@@ -155,18 +156,18 @@ export default function CoursesLearningPrograms() {
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-white/50 mb-5 pb-5 border-t border-white/10 pt-4">
+                    <div className="flex items-center gap-4 text-sm text-white/30 mb-5 pb-5 border-t border-white/[0.06] pt-4">
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         {course.students}
                       </div>
                       <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        <Star className="h-4 w-4 fill-[#D4AF5A] text-[#D4AF5A]" />
                         {course.rating} ({course.reviews})
                       </div>
                     </div>
 
-                    <Button className={`w-full text-white font-semibold bg-gradient-to-r ${course.color} hover:opacity-90 shadow-lg transition-all`}>
+                    <Button className="w-full btn-premium hover:opacity-95 shadow-lg transition-all hover:scale-105">
                       Enroll Now
                     </Button>
                   </CardHeader>
@@ -185,7 +186,7 @@ export default function CoursesLearningPrograms() {
         >
           <Button
             variant="link"
-            className="text-cyan-400 hover:text-cyan-300 font-medium"
+            className="text-[#C49B4B] hover:text-[#D4AF5A] font-medium"
           >
             View All Courses <ChevronRight className="ml-1 h-4 w-4" />
           </Button>

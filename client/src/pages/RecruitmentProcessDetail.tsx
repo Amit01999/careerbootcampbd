@@ -42,7 +42,7 @@ export default function RecruitmentProcessDetail() {
 
   if (!bank) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] to-white flex items-center justify-center">
+      <div className="min-h-screen  bg-gradient-to-b from-[#F2F6FF] to-white flex items-center justify-center ">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Bank Not Found
@@ -59,7 +59,7 @@ export default function RecruitmentProcessDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] to-white mt-20">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

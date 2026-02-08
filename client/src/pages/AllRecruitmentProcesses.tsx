@@ -8,17 +8,17 @@ export default function AllRecruitmentProcesses() {
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const filteredBanks = banksData.filter(
-    (bank) =>
+    bank =>
       bank.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bank.shortName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       bank.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bank.positions.some((pos) =>
-        pos.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      bank.positions.some(pos =>
+        pos.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] via-[#E7EEFF] to-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] via-[#E7EEFF] to-white mt-20">
       {/* Header */}
       <div className="relative bg-white border-b border-gray-200 overflow-hidden">
         {/* Background decoration */}
@@ -39,7 +39,8 @@ export default function AllRecruitmentProcesses() {
               <span className="text-primary"> Recruitment Programs</span>
             </h1>
             <p className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Discover comprehensive recruitment information, requirements, and processes for leading banks in Bangladesh
+              Discover comprehensive recruitment information, requirements, and
+              processes for leading banks in Bangladesh
             </p>
           </div>
 
@@ -51,7 +52,7 @@ export default function AllRecruitmentProcesses() {
                 type="text"
                 placeholder="Search banks, positions, or keywords..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 className="pl-14 pr-6 py-7 text-base rounded-2xl border-2 border-gray-200 focus:border-primary shadow-lg"
               />
             </div>
@@ -65,7 +66,9 @@ export default function AllRecruitmentProcesses() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <p className="text-gray-600 text-lg">
-              <span className="font-bold text-gray-900 text-2xl">{filteredBanks.length}</span>{' '}
+              <span className="font-bold text-gray-900 text-2xl">
+                {filteredBanks.length}
+              </span>{' '}
               {filteredBanks.length === 1 ? 'bank' : 'banks'} available
             </p>
             {searchQuery && (
@@ -82,7 +85,7 @@ export default function AllRecruitmentProcesses() {
         {/* Cards Grid */}
         {filteredBanks.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredBanks.map((bank) => (
+            {filteredBanks.map(bank => (
               <BankCard
                 key={bank.id}
                 id={bank.id}
@@ -101,7 +104,9 @@ export default function AllRecruitmentProcesses() {
             <div className="text-gray-400 mb-6">
               <Search className="w-20 h-20 mx-auto" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">No banks found</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+              No banks found
+            </h3>
             <p className="text-gray-600 text-lg mb-6">
               We couldn't find any banks matching "{searchQuery}"
             </p>

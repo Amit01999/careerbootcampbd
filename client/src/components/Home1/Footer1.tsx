@@ -29,20 +29,20 @@ export default function Footer1() {
 
   return (
     <div>
-      <footer className="relative py-20 border-t border-white/5">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#030712] to-transparent pointer-events-none" />
+      <footer className="relative py-20 border-t border-white/[0.06] bg-[#09090B]">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C] to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-                  <Target className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C49B4B] to-[#D4AF5A] flex items-center justify-center shadow-lg shadow-[#C49B4B]/20">
+                  <Target className="w-6 h-6 text-[#09090B]" />
                 </div>
                 <div>
                   <span className="text-xl font-bold text-white">BankPrep</span>
                 </div>
               </Link>
-              <p className="text-white/50 mb-6 max-w-sm leading-relaxed">
+              <p className="text-white/35 mb-6 max-w-sm leading-relaxed">
                 Bangladesh&apos;s most trusted platform for bank exam
                 preparation. Join 50,000+ successful aspirants.
               </p>
@@ -54,7 +54,7 @@ export default function Footer1() {
                     key={social}
                     href={`#${social}`}
                     whileHover={{ scale: 1.1, y: -2 }}
-                    className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-cyan-400 hover:border-cyan-500/30 transition-all"
+                    className="w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/30 hover:text-[#C49B4B] hover:border-[#C49B4B]/20 hover:bg-[#C49B4B]/5 transition-all"
                   >
                     <span className="sr-only">{social}</span>
                     {socialIcons[social]}
@@ -99,7 +99,7 @@ export default function Footer1() {
                     <li key={item}>
                       <Link
                         to="#"
-                        className="text-white/50 hover:text-cyan-400 transition-colors text-sm"
+                        className="text-white/35 hover:text-[#C49B4B] transition-colors text-sm"
                       >
                         {item}
                       </Link>
@@ -110,14 +110,10 @@ export default function Footer1() {
             ))}
           </div>
 
-          <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-white/40 text-sm">
-              © 2024 BankPrep Pro. All rights reserved.
+          <div className="pt-8 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-white/20 text-sm">
+              © 2026 careerbootcampbd. All rights reserved.
             </p>
-            {/* <p className="text-white/40 text-sm flex items-center gap-2">
-              Made with <span className="text-rose-500">♥</span> for Bank Job
-              Aspirants
-            </p> */}
           </div>
         </div>
       </footer>

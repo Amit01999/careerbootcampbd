@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Card,
   CardDescription,
@@ -6,10 +7,11 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, ChevronDown, HelpCircle } from 'lucide-react';
-import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FAQSection() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   const faqs = [
     {
       question: 'Which private bank exams are covered in your courses?',
@@ -52,41 +54,43 @@ export default function FAQSection() {
         'Yes! All enrolled students receive instant notifications about new bank job circulars, application deadlines, exam dates, and result announcements via email and app push notifications.',
     },
   ];
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-violet-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[150px]" />
+    <section className="relative py-16 px-4 sm:px-6 lg:px-8 bg-[#09090B] overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-[#C49B4B]/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] bg-[#C49B4B]/[0.02] rounded-full blur-[120px]" />
       </div>
 
-      <div className="mx-auto max-w-4xl relative z-10">
+      <div className="relative z-10 mx-auto max-w-4xl">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center space-y-5 mb-16"
+          className="text-center mb-16 space-y-5"
         >
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500/10 to-purple-500/10 backdrop-blur-sm border border-violet-500/20 text-violet-400 px-5 py-2.5 rounded-full mb-2">
+          <div
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5
+            bg-[#C49B4B]/10 border border-[#C49B4B]/20 text-[#D4AF5A]"
+          >
             <HelpCircle className="w-4 h-4" />
             <span className="text-sm font-semibold">FAQ</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
             Frequently Asked{' '}
-            <span className="bg-gradient-to-r from-cyan-300 via-cyan-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(6,182,212,0.4)]">
-              Questions
-            </span>
+            <span className="text-gradient-gold">Questions</span>
           </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto font-light">
+
+          <p className="max-w-2xl mx-auto text-lg text-white/40 font-light">
             Everything you need to know about Private Bank Bootcamp
           </p>
         </motion.div>
 
-        {/* FAQ Cards */}
+        {/* FAQ list */}
         <div className="space-y-4">
           {faqs.map((faq, i) => (
             <motion.div
@@ -96,36 +100,55 @@ export default function FAQSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
             >
-              <motion.div whileHover={{ scale: 1.01 }} className="group">
-                <Card className="bg-gradient-to-br from-white/[0.12] via-white/[0.08] to-white/[0.03] backdrop-blur-2xl border border-white/20 hover:border-white/30 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-2xl overflow-hidden">
-                  {/* Glow effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
+              <div className="group relative">
+                {/* Hover glow */}
+                <div
+                  className="pointer-events-none absolute -inset-px rounded-2xl
+                  bg-gradient-to-r from-[#C49B4B]/15 to-[#D4AF5A]/10
+                  opacity-0 group-hover:opacity-100
+                  blur-xl transition-opacity duration-500"
+                />
 
+                <Card
+                  className="
+                    relative z-10 rounded-2xl overflow-hidden
+                    border border-white/[0.06]
+                    bg-[linear-gradient(165deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]
+                    transition-all duration-300
+                    group-hover:border-[#C49B4B]/30
+                    group-hover:shadow-[0_10px_40px_-15px_rgba(196,155,75,0.35)]
+                  "
+                >
                   <CardHeader
-                    className="p-6 cursor-pointer relative z-10"
+                    className="p-6 cursor-pointer"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   >
                     <div className="flex items-start justify-between gap-4">
-                      <CardTitle className="text-base font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                      <CardTitle
+                        className="text-base font-semibold text-white
+                        transition-colors duration-300
+                        group-hover:text-[#D4AF5A]"
+                      >
                         {faq.question}
                       </CardTitle>
+
                       <motion.div
                         animate={{ rotate: openFaq === i ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.25, ease: 'easeOut' }}
                       >
-                        <ChevronDown className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                        <ChevronDown className="w-5 h-5 text-white/30" />
                       </motion.div>
                     </div>
 
-                    <AnimatePresence>
+                    <AnimatePresence initial={false}>
                       {openFaq === i && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.3, ease: 'easeOut' }}
                         >
-                          <CardDescription className="text-sm text-white/60 mt-4 leading-relaxed">
+                          <CardDescription className="mt-4 text-sm leading-relaxed text-white/40">
                             {faq.answer}
                           </CardDescription>
                         </motion.div>
@@ -133,28 +156,27 @@ export default function FAQSection() {
                     </AnimatePresence>
                   </CardHeader>
                 </Card>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Contact Button */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="mt-12 text-center"
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              variant="link"
-              className="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 mx-auto text-base font-semibold"
-            >
-              <MessageCircle className="h-5 w-5" />
-              Still have questions? Talk to our counselors
-            </Button>
-          </motion.div>
+          <Button
+            variant="link"
+            className="text-[#C49B4B] hover:text-[#D4AF5A]
+            flex items-center gap-2 mx-auto text-base font-semibold"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Still have questions? Talk to our counselors
+          </Button>
         </motion.div>
       </div>
     </section>
