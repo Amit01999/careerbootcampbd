@@ -34,10 +34,7 @@ export default function CTA() {
             {/* Heading */}
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
               Start Your Banking{' '}
-              <span className="text-gradient-gold">
-                Career Journey
-              </span>{' '}
-              Today
+              <span className="text-gradient-gold">Career Journey</span> Today
             </h2>
 
             {/* Description */}
@@ -81,7 +78,7 @@ export default function CTA() {
               {[
                 { value: '10K+', label: 'Students Enrolled' },
                 { value: '95%', label: 'Success Rate' },
-                { value: '40+', label: 'Partner Banks' },
+                { value: '40+', label: 'Banks' },
               ].map((stat, idx) => (
                 <div key={idx} className="text-center">
                   <div className="text-3xl font-bold text-[#D4AF5A]">
@@ -105,9 +102,11 @@ export default function CTA() {
               {/* Glow effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-[#C49B4B]/15 to-[#D4AF5A]/10 rounded-3xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
 
-              <div className="relative rounded-3xl p-10 space-y-8 border border-white/[0.06] hover:border-[#C49B4B]/20 transition-all duration-300"
+              <div
+                className="relative rounded-3xl p-10 space-y-8 border border-white/[0.06] hover:border-[#C49B4B]/20 transition-all duration-300"
                 style={{
-                  background: 'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  background:
+                    'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
                 }}
               >
                 {/* Title */}
@@ -159,8 +158,8 @@ export default function CTA() {
                 {/* Guarantee */}
                 <div className="text-center pt-6 border-t border-white/[0.06]">
                   <p className="text-xs text-white/20">
-                    No credit card required &bull; Cancel anytime &bull; Money-back
-                    guarantee
+                    No credit card required &bull; Cancel anytime &bull;
+                    Money-back guarantee
                   </p>
                 </div>
               </div>

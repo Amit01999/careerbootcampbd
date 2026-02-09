@@ -13,7 +13,7 @@ export default function RecruitmentProcesses() {
   const displayedBanks = banksData.slice(0, 8);
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#09090B]">
+    <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#09090B]">
       {/* Background effects */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#C49B4B]/[0.04] rounded-full blur-[100px]" />
@@ -37,9 +37,7 @@ export default function RecruitmentProcesses() {
           </div>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
             Explore Bank{' '}
-            <span className="text-gradient-gold">
-              Recruitment Processes
-            </span>
+            <span className="text-gradient-gold">Recruitment Processes</span>
           </h2>
           <p className="text-lg text-white/40 max-w-2xl mx-auto font-light">
             Comprehensive step-by-step guides for Bangladesh's top bank
@@ -63,7 +61,8 @@ export default function RecruitmentProcesses() {
                 transition={{ type: 'spring', stiffness: 300 }}
                 className="group relative w-full h-full rounded-3xl p-6 shadow-lg transition-all duration-300 text-left overflow-hidden border border-white/[0.06] hover:border-[#C49B4B]/20"
                 style={{
-                  background: 'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                  background:
+                    'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
                 }}
               >
                 {/* Hover Glow Effect */}
@@ -123,21 +122,37 @@ export default function RecruitmentProcesses() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center"
+          className="text-center px-4 sm:px-0"
         >
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex justify-center"
+          >
             <Button
               onClick={() => navigate('/recruitment-processes')}
-              className="btn-premium px-12 py-6 text-base rounded-2xl shadow-lg transition-all duration-300 hover:scale-105"
+              className="
+        btn-premium
+        w-full sm:w-auto
+        px-6 py-4 sm:px-10 sm:py-5 lg:px-12 lg:py-6
+        text-sm sm:text-base
+        rounded-xl sm:rounded-2xl
+        shadow-lg
+        transition-all duration-300
+        hover:scale-105
+      "
             >
-              <span className="flex items-center gap-3">
-                <Sparkles className="w-5 h-5" />
-                View All Bank Recruitment Processes
-                <ArrowRight className="w-5 h-5" />
+              <span className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-center leading-snug">
+                  View All Bank Recruitment Processes
+                </span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </span>
             </Button>
           </motion.div>
-          <p className="text-sm text-white/25 mt-6">
+
+          <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-white/30">
             Explore {banksData.length}+ bank recruitment programs
           </p>
         </motion.div>

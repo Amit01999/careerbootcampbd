@@ -71,10 +71,10 @@ export default function CoursesLearningPrograms() {
   ];
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0A0C]">
+    <section className="relative py-16 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0A0C]">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/3 w-[600px] h-[600px] bg-[#C49B4B]/[0.03] rounded-full blur-[100px]" />
+        <div className="absolute top-1/4 right-1/3 w-[400px] sm:w-[500px] md:w-[600px] h-[400px] sm:h-[500px] md:h-[600px] bg-[#C49B4B]/[0.03] rounded-full blur-[100px]" />
       </div>
 
       <div className="mx-auto max-w-[1006px] relative z-10">
@@ -83,17 +83,17 @@ export default function CoursesLearningPrograms() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center space-y-4 mb-16"
+          className="text-center space-y-4 mb-12 sm:mb-16 px-2 sm:px-0"
         >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
             Complete Course Programs
           </h2>
-          <p className="text-lg text-white/40 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-white/40 max-w-md sm:max-w-3xl mx-auto">
             Structured learning paths for every private bank position
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course, i) => (
             <motion.div
               key={i}
@@ -103,44 +103,46 @@ export default function CoursesLearningPrograms() {
               transition={{ duration: 0.6, delay: i * 0.15 }}
             >
               <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 300 }}
                 className="group relative h-full"
               >
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#C49B4B]/20 to-[#D4AF5A]/10 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Card className="relative h-full border border-white/[0.06] group-hover:border-[#C49B4B]/20 shadow-xl transition-all duration-300"
+                <Card
+                  className="relative h-full border border-white/[0.06] group-hover:border-[#C49B4B]/20 shadow-xl transition-all duration-300"
                   style={{
-                    background: 'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+                    background:
+                      'linear-gradient(165deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
                   }}
                 >
                   <div className="absolute top-4 right-4 z-10">
                     {course.badge ? (
-                      <Badge className="bg-gradient-to-r from-[#C49B4B] to-[#D4AF5A] text-[#09090B] border-0 font-bold shadow-sm">
+                      <Badge className="bg-gradient-to-r from-[#C49B4B] to-[#D4AF5A] text-[#09090B] border-0 font-bold shadow-sm text-xs sm:text-sm">
                         {course.badge}
                       </Badge>
                     ) : (
-                      <Badge className="bg-[#C49B4B]/10 text-[#D4AF5A] border border-[#C49B4B]/20 shadow-sm">
+                      <Badge className="bg-[#C49B4B]/10 text-[#D4AF5A] border border-[#C49B4B]/20 shadow-sm text-xs sm:text-sm">
                         {course.duration}
                       </Badge>
                     )}
                   </div>
 
-                  <CardHeader className="p-6 pt-14">
+                  <CardHeader className="p-4 sm:p-6 pt-14">
                     <div className="mb-4">
-                      <div className="flex items-baseline gap-2 mb-2">
-                        <span className="text-3xl font-bold text-white">
+                      <div className="flex items-baseline gap-2 mb-2 flex-wrap">
+                        <span className="text-2xl sm:text-3xl font-bold text-white">
                           {course.price}
                         </span>
-                        <span className="text-lg text-white/25 line-through">
+                        <span className="text-sm sm:text-lg text-white/25 line-through">
                           {course.oldPrice}
                         </span>
                       </div>
-                      <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                      <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs sm:text-sm">
                         {course.discount}
                       </Badge>
                     </div>
 
-                    <CardTitle className="text-lg font-semibold mb-4 text-white group-hover:text-[#D4AF5A] transition-colors">
+                    <CardTitle className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white group-hover:text-[#D4AF5A] transition-colors">
                       {course.title}
                     </CardTitle>
 
@@ -148,7 +150,7 @@ export default function CoursesLearningPrograms() {
                       {course.features.slice(0, 6).map((feature, j) => (
                         <div
                           key={j}
-                          className="flex items-start gap-2 text-sm text-white/40"
+                          className="flex items-start gap-2 text-xs sm:text-sm text-white/40"
                         >
                           <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                           <span>{feature}</span>
@@ -156,7 +158,7 @@ export default function CoursesLearningPrograms() {
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-white/30 mb-5 pb-5 border-t border-white/[0.06] pt-4">
+                    <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-white/30 mb-5 pb-5 border-t border-white/[0.06] pt-4">
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         {course.students}
@@ -167,7 +169,7 @@ export default function CoursesLearningPrograms() {
                       </div>
                     </div>
 
-                    <Button className="w-full btn-premium hover:opacity-95 shadow-lg transition-all hover:scale-105">
+                    <Button className="w-full btn-premium hover:opacity-95 shadow-lg transition-all hover:scale-105 text-sm sm:text-base py-3 sm:py-4 rounded-lg">
                       Enroll Now
                     </Button>
                   </CardHeader>
@@ -182,11 +184,11 @@ export default function CoursesLearningPrograms() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center mt-12"
+          className="text-center mt-8 sm:mt-12"
         >
           <Button
             variant="link"
-            className="text-[#C49B4B] hover:text-[#D4AF5A] font-medium"
+            className="text-sm sm:text-base text-[#C49B4B] hover:text-[#D4AF5A] font-medium"
           >
             View All Courses <ChevronRight className="ml-1 h-4 w-4" />
           </Button>

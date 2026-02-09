@@ -11,6 +11,7 @@ import SuccessStories from '../homepage/SuccessStories';
 import HeroSection from './HeroSection1';
 import Services from './Services';
 import PublicationsShowcase from './PublicationsShowcase';
+import ResourcePersons from './ResourcePersons';
 
 export default function BankPrepHomepage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,10 +24,10 @@ export default function BankPrepHomepage() {
       <HeroSection />
 
       {/* <Services /> */}
-
+      <PublicationsShowcase />
       {/* Feature Showcase */}
       <FeatureShowcase />
-      <PublicationsShowcase />
+
       {/* Popular Mock Tests Slider */}
       <MockTest />
 
@@ -34,14 +35,14 @@ export default function BankPrepHomepage() {
       <CoursesLearningPrograms />
 
       {/* App Promotion Section */}
-      <AppPromotion />
+      {/* <AppPromotion /> */}
 
       {/* Why Choose Us */}
-      <WhyChooseUs />
+      {/* <WhyChooseUs /> */}
 
       {/* Bank Recruitment Processes */}
       <RecruitmentProcesses />
-
+      <ResourcePersons />
       {/* Footer CTA Strip */}
       <CTA />
 
