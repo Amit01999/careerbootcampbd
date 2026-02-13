@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Building2 } from 'lucide-react';
+import { Search, Building2, GraduationCap } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import BankCard from '@/components/BankCard';
 import { banksData } from '@/data/banksData';
@@ -18,27 +18,43 @@ export default function AllRecruitmentProcesses() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F2F6FF] via-[#E7EEFF] to-white mt-20">
-      {/* Header */}
-      <div className="relative bg-white border-b border-gray-200 overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-blue-500/5" />
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+    <div className="min-h-screen bg-[#09090B] mt-20">
+      {/* Hero Header */}
+      <div className="relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(99,140,255,0.08)_0%,_transparent_60%)]" />
+        <div className="absolute -top-32 -right-32 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]" />
+        <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] bg-indigo-500/5 rounded-full blur-[100px]" />
+        {/* Noise texture */}
+        <div
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 pb-20">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6">
-              <Building2 className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-full mb-6">
+              <Building2 className="w-4 h-4 text-blue-400" />
+              <span className="text-xs font-semibold text-blue-300/90 tracking-wider uppercase">
                 Bangladesh's Premier Banking Institutions
               </span>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Explore Bank
-              <span className="text-primary"> Recruitment Programs</span>
+
+            {/* Title */}
+            <h1 className="text-4xl lg:text-6xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+              Explore Bank{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400">
+                Recruitment Programs
+              </span>
             </h1>
-            <p className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+            {/* Subtitle */}
+            <p className="text-lg lg:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Discover comprehensive recruitment information, requirements, and
               processes for leading banks in Bangladesh
             </p>
@@ -47,17 +63,20 @@ export default function AllRecruitmentProcesses() {
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
               <Input
                 type="text"
                 placeholder="Search banks, positions, or keywords..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="pl-14 pr-6 py-7 text-base rounded-2xl border-2 border-gray-200 focus:border-primary shadow-lg"
+                className="pl-14 pr-6 py-7 text-base text-white placeholder:text-gray-500 rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm focus:border-blue-500/40 focus:bg-white/[0.06] shadow-xl transition-all duration-300"
               />
             </div>
           </div>
         </div>
+
+        {/* Bottom gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#09090B] to-transparent" />
       </div>
 
       {/* Content */}
@@ -65,8 +84,8 @@ export default function AllRecruitmentProcesses() {
         {/* Results count */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <p className="text-gray-600 text-lg">
-              <span className="font-bold text-gray-900 text-2xl">
+            <p className="text-gray-500 text-base font-medium">
+              <span className="font-extrabold text-white text-2xl">
                 {filteredBanks.length}
               </span>{' '}
               {filteredBanks.length === 1 ? 'bank' : 'banks'} available
@@ -74,7 +93,7 @@ export default function AllRecruitmentProcesses() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors"
               >
                 Clear search
               </button>
@@ -84,7 +103,7 @@ export default function AllRecruitmentProcesses() {
 
         {/* Cards Grid */}
         {filteredBanks.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredBanks.map(bank => (
               <BankCard
                 key={bank.id}
@@ -101,18 +120,18 @@ export default function AllRecruitmentProcesses() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="text-gray-400 mb-6">
+            <div className="text-gray-600 mb-6">
               <Search className="w-20 h-20 mx-auto" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+            <h3 className="text-2xl font-extrabold text-white mb-3">
               No banks found
             </h3>
-            <p className="text-gray-600 text-lg mb-6">
+            <p className="text-gray-400 text-lg font-medium mb-6">
               We couldn't find any banks matching "{searchQuery}"
             </p>
             <button
               onClick={() => setSearchQuery('')}
-              className="px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+              className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-500 transition-colors shadow-lg"
             >
               View All Banks
             </button>

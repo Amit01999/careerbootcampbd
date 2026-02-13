@@ -25,28 +25,50 @@ export default function BankCard({
 }: BankCardProps) {
   return (
     <Link to={`/bank/${id}`} className="group block h-full">
-      <div className="relative h-full bg-white border-2 border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary hover:shadow-2xl hover:-translate-y-2">
+      <div
+        className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 border"
+        style={{
+          background:
+            'linear-gradient(165deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+          borderColor: 'rgba(255,255,255,0.08)',
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLDivElement).style.borderColor = `${color}35`;
+          (e.currentTarget as HTMLDivElement).style.boxShadow =
+            `0 8px 40px ${color}15, 0 0 0 1px ${color}20`;
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLDivElement).style.borderColor =
+            'rgba(255,255,255,0.08)';
+          (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
+        }}
+      >
         {/* Gradient Header */}
-        <div
-          className={`h-32 ${bgColor} relative overflow-hidden`}
-          style={{
-            background: `linear-gradient(135deg, ${color}15 0%, ${color}30 100%)`,
-          }}
-        >
+        <div className="h-28 relative overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(135deg, ${color}18 0%, ${color}08 100%)`,
+            }}
+          />
           {/* Decorative circles */}
           <div
-            className="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-20"
+            className="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-15"
             style={{ backgroundColor: color }}
           />
           <div
-            className="absolute -bottom-4 -left-4 w-24 h-24 rounded-full opacity-10"
+            className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full opacity-10"
             style={{ backgroundColor: color }}
           />
 
           {/* Logo */}
           <div className="absolute bottom-4 left-6">
             <div
-              className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-4xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+              className="w-16 h-16 rounded-xl flex items-center justify-center text-3xl shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-2 border"
+              style={{
+                background: 'rgba(255,255,255,0.9)',
+                borderColor: 'rgba(255,255,255,0.3)',
+              }}
             >
               {logo}
             </div>
@@ -54,33 +76,41 @@ export default function BankCard({
         </div>
 
         {/* Content */}
-        <div className="p-6 pt-8">
+        <div className="p-6 pt-7">
           {/* Bank Name */}
-          <div className="mb-2">
-            <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color }}>
+          <div className="mb-3">
+            <div
+              className="text-[10px] font-extrabold uppercase tracking-[0.15em] mb-1.5"
+              style={{ color }}
+            >
               {shortName}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 leading-tight group-hover:text-primary transition-colors">
+            <h3 className="text-lg font-bold text-white leading-tight group-hover:text-opacity-90 transition-colors">
               {name}
             </h3>
           </div>
 
           {/* Description */}
-          <p className="text-sm text-gray-600 leading-relaxed mb-4 min-h-[40px]">
+          <p className="text-sm text-gray-400 leading-relaxed mb-4 min-h-[40px]">
             {description}
           </p>
 
           {/* Positions */}
-          <div className="mb-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-gray-500 mb-2">
-              <Briefcase className="w-3.5 h-3.5" />
+          <div className="mb-5">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2.5">
+              <Briefcase className="w-3 h-3" />
               Available Positions
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {positions.map((position, index) => (
                 <span
                   key={index}
-                  className="inline-block px-3 py-1.5 bg-gray-100 rounded-full text-xs font-medium text-gray-700 group-hover:bg-primary group-hover:text-white transition-colors"
+                  className="inline-block px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all duration-300"
+                  style={{
+                    backgroundColor: `${color}10`,
+                    borderColor: `${color}20`,
+                    color: color,
+                  }}
                 >
                   {position}
                 </span>
@@ -89,16 +119,21 @@ export default function BankCard({
           </div>
 
           {/* CTA */}
-          <div className="flex items-center gap-2 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color }}>
-            View Requirements & Process
+          <div
+            className="flex items-center gap-2 text-sm font-bold opacity-60 group-hover:opacity-100 transition-all duration-300"
+            style={{ color }}
+          >
+            View Details
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </div>
         </div>
 
         {/* Bottom accent line */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-1.5 transition-all duration-300 opacity-0 group-hover:opacity-100"
-          style={{ backgroundColor: color }}
+          className="absolute bottom-0 left-0 right-0 h-0.5 transition-all duration-500 opacity-0 group-hover:opacity-100"
+          style={{
+            background: `linear-gradient(to right, transparent, ${color}, transparent)`,
+          }}
         />
       </div>
     </Link>

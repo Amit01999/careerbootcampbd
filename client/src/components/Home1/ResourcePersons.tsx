@@ -1,6 +1,6 @@
 import ram from '../../assets/resourseperson/ram.jpeg';
 import rafid from '../../assets/resourseperson/sadman.jpeg';
-import maruf from '../../assets/resourseperson/raful.jpeg';
+import maruf from '../../assets/resourseperson/maruf.jpeg';
 import nafis from '../../assets/resourseperson/nafis .jpeg';
 import rafiul from '../../assets/resourseperson/raful.jpeg';
 

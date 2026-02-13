@@ -219,11 +219,12 @@ function CardButtons({
     <div className="flex items-center gap-2 relative z-10">
       <Link
         to={freeLink}
-        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-white/[0.06] border border-white/[0.08] text-white/60 hover:text-white hover:bg-white/[0.1] hover:border-white/[0.15] transition-all duration-300"
+        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-400/40 transition-all duration-300"
       >
         <Zap className="w-3 h-3" />
         Free
       </Link>
+
       <Link
         to={premiumLink}
         className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-gradient-to-r from-[#C49B4B]/15 to-[#D4AF5A]/10 border border-[#C49B4B]/20 text-[#D4AF5A] hover:from-[#C49B4B]/25 hover:to-[#D4AF5A]/15 hover:border-[#C49B4B]/35 transition-all duration-300"
@@ -314,7 +315,7 @@ export default function HeroSection() {
                 className="
           pointer-events-none
           absolute
-          left-1/2 top-28
+          left-1/2 top-14
           -translate-x-1/2
           -translate-y-[38%]
           w-[700px] h-[1200px]
@@ -346,123 +347,16 @@ export default function HeroSection() {
                 >
                   Passionately
                   <br />
-                  formulated for private bank
+                  Formulated for Private Bank
                   {''}{' '}
                   <span
                     className="relative z-10 text-transparent bg-clip-text 
   bg-gradient-to-r from-[#F9E7B2] via-[#F5D37A] to-[#E0B84F]"
                   >
-                    aspirants
+                    Aspirants
                   </span>
                 </h1>
               </div>
-            </motion.div>
-            {/* CTA BUTTONS */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="flex flex-wrap items-center gap-3 md:gap-6"
-            >
-              {/* ===== Primary CTA ===== */}
-              <Link
-                to="/exams"
-                className="
-      group relative inline-flex items-center gap-2 md:gap-3
-      px-6 py-3.5 md:px-9 md:py-5 rounded-xl
-      font-semibold text-[13px] md:text-[15px]
-      text-[#0F0E0D]
-      overflow-hidden
-      transition-all duration-500
-      hover:-translate-y-[1px]
-      hover:shadow-[0_18px_60px_rgba(196,155,75,0.35)]
-      active:translate-y-[0px]
-    "
-              >
-                {/* Base Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#A47F3B] via-[#C49B4B] to-[#D4AF5A]" />
-
-                {/* Depth Shadow Layer */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/25" />
-
-                {/* Hover Light Sweep */}
-                <div
-                  className="
-        absolute inset-0
-        bg-gradient-to-r
-        from-white/0
-        via-white/30
-        to-white/0
-        opacity-0
-        group-hover:opacity-100
-        transition-opacity duration-500
-      "
-                />
-
-                {/* Inner Border */}
-                <div
-                  className="
-        absolute inset-[1px]
-        rounded-[10px]
-        bg-gradient-to-b
-        from-white/30
-        to-transparent
-        opacity-40
-      "
-                />
-
-                <span className="relative z-10 flex items-center gap-3">
-                  Start Free Practice
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                </span>
-              </Link>
-
-              {/* ===== Secondary CTA ===== */}
-              <button
-                className="
-      group relative inline-flex items-center gap-2 md:gap-3
-      px-6 py-3 md:px-9 md:py-4 rounded-xl
-      font-medium text-[13px] md:text-[15px]
-      text-white/65
-      border border-white/[0.08]
-      bg-white/[0.03]
-      backdrop-blur-sm
-      transition-all duration-500
-      hover:text-white/90
-      hover:border-white/[0.18]
-      hover:bg-white/[0.06]
-      hover:-translate-y-[1px]
-      hover:shadow-[0_14px_40px_rgba(0,0,0,0.35)]
-    "
-              >
-                {/* Inner Depth */}
-                <div className="absolute inset-0 rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" />
-                {/* Play Icon */}
-                <div
-                  className="
-        w-9 h-9 rounded-full
-        border border-white/12
-        bg-black/20
-        flex items-center justify-center
-        transition-all duration-300
-        group-hover:border-[#C49B4B]/40
-        group-hover:bg-[#C49B4B]/10
-      "
-                >
-                  <div
-                    className="
-          w-0 h-0
-          border-t-[5px] border-t-transparent
-          border-b-[5px] border-b-transparent
-          border-l-[8px] border-l-white/60
-          ml-0.5
-          transition-colors duration-300
-          group-hover:border-l-[#C49B4B]
-        "
-                  />
-                </div>
-                Watch Demo
-              </button>
             </motion.div>
 
             {/* STATS */}
@@ -536,7 +430,7 @@ export default function HeroSection() {
 
               {/* Bento grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {/* Card 1 - Preli & Written (tall) */}
+                {/* Card 1 */}
                 <TiltCard className="col-span-1 row-span-1">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -550,35 +444,22 @@ export default function HeroSection() {
                       backdropFilter: 'blur(20px)',
                     }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#C49B4B]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     <div>
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/10 flex items-center justify-center mb-4">
                         <BookOpen className="w-5 h-5 text-[#C49B4B]" />
                       </div>
-                      <h3 className="text-[15px] font-semibold text-white mb-1.5 tracking-tight">
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
                         Preli & Written
                       </h3>
-                      <p className="text-xs text-white/30 leading-relaxed">
-                        Full syllabus coverage with structured learning paths
-                      </p>
                     </div>
-                    <div className="space-y-3">
-                      <div>
-                        <span className="text-2xl font-bold text-[#C49B4B] tracking-tight">
-                          2,400+
-                        </span>
-                        <span className="text-[10px] text-white/20 ml-1.5 uppercase tracking-wider">
-                          Questions
-                        </span>
-                      </div>
-                      <CardButtons freeLink="/exams" premiumLink="/auth" />
-                    </div>
+
+                    <CardButtons freeLink="/exams" premiumLink="/auth" />
                   </motion.div>
                 </TiltCard>
 
-                {/* Card 2 + 3 stacked */}
+                {/* Right stacked cards */}
                 <div className="col-span-1 flex flex-col gap-3">
-                  {/* Card 2 - Job Solutions */}
+                  {/* Card 2 */}
                   <TiltCard>
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
@@ -592,28 +473,19 @@ export default function HeroSection() {
                         backdropFilter: 'blur(20px)',
                       }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#C49B4B]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      <div className="flex items-start justify-between">
-                        <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center">
-                          <FileText className="w-4.5 h-4.5 text-white/50" />
-                        </div>
-                        <span className="text-[9px] font-semibold tracking-widest uppercase text-white/20 px-2 py-1 rounded-md bg-white/[0.03] border border-white/[0.04]">
-                          180+ Papers
-                        </span>
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/10 flex items-center justify-center">
+                        <FileText className="w-5 h-5 text-[#C49B4B]" />
                       </div>
-                      <div>
-                        <h3 className="text-[13px] font-semibold text-white tracking-tight">
-                          Job Solutions
-                        </h3>
-                        <p className="text-[11px] text-white/25 mt-0.5 mb-2">
-                          Past exams, fully solved
-                        </p>
-                        <CardButtons freeLink="/exams" premiumLink="/auth" />
-                      </div>
+
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        Job Solutions
+                      </h3>
+
+                      <CardButtons freeLink="/exams" premiumLink="/auth" />
                     </motion.div>
                   </TiltCard>
 
-                  {/* Card 3 - Model Tests */}
+                  {/* Card 3 */}
                   <TiltCard>
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
@@ -627,32 +499,20 @@ export default function HeroSection() {
                         backdropFilter: 'blur(20px)',
                       }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-b from-[#C49B4B]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      <div className="flex items-start justify-between">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-500/[0.08] border border-emerald-500/[0.1] flex items-center justify-center">
-                          <ClipboardCheck className="w-4.5 h-4.5 text-emerald-400/70" />
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/60 animate-pulse" />
-                          <span className="text-[9px] font-medium text-emerald-400/50 uppercase tracking-wider">
-                            Live
-                          </span>
-                        </div>
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/10 flex items-center justify-center">
+                        <ClipboardCheck className="w-5 h-5 text-[#C49B4B]" />
                       </div>
-                      <div>
-                        <h3 className="text-[13px] font-semibold text-white tracking-tight">
-                          Model Tests
-                        </h3>
-                        <p className="text-[11px] text-white/25 mt-0.5 mb-2">
-                          50+ timed exam simulations
-                        </p>
-                        <CardButtons freeLink="/exams" premiumLink="/auth" />
-                      </div>
+
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        Model Tests
+                      </h3>
+
+                      <CardButtons freeLink="/exams" premiumLink="/auth" />
                     </motion.div>
                   </TiltCard>
                 </div>
 
-                {/* Card 4 - Viva Prep (wide) */}
+                {/* Card 4 - Wide */}
                 <TiltCard className="col-span-1 sm:col-span-2">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -665,33 +525,16 @@ export default function HeroSection() {
                       border: '1px solid rgba(196,155,75,0.1)',
                     }}
                   >
-                    <div
-                      className="absolute inset-0 opacity-[0.03]"
-                      style={{
-                        backgroundImage:
-                          'repeating-linear-gradient(105deg, transparent, transparent 20px, rgba(196,155,75,0.15) 20px, rgba(196,155,75,0.15) 21px)',
-                      }}
-                    />
-                    <div className="absolute top-0 right-0 w-60 h-60 rounded-full bg-[#C49B4B]/[0.04] blur-[60px]" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#C49B4B]/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
                     <div className="flex items-center gap-5 w-full relative z-10">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/15 flex items-center justify-center shrink-0">
                         <MessageSquare className="w-5 h-5 text-[#C49B4B]" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2.5 mb-1">
-                          <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                            AI Viva Preparation
-                          </h3>
-                          <span className="px-2 py-0.5 rounded-md text-[9px] font-bold tracking-widest uppercase bg-gradient-to-r from-[#C49B4B]/20 to-[#C49B4B]/10 text-[#D4AF5A] border border-[#C49B4B]/15">
-                            Premium
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-white/25 leading-relaxed mb-2.5">
-                          AI-powered mock interviews with real-time feedback &
-                          scoring
-                        </p>
+
+                      <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                        AI Viva Preparation
+                      </h3>
+
+                      <div className="ml-auto">
                         <CardButtons freeLink="/exams" premiumLink="/auth" />
                       </div>
                     </div>

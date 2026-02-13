@@ -114,7 +114,7 @@ export default function PublicationsShowcase() {
   ];
 
   return (
-    <section className="relative w-full bg-[#09090B] overflow-hidden py-4 md:py-10">
+    <section className="relative w-full bg-[#09090B] overflow-hidden py-4 md:py-16">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-[#C49B4B] via-transparent to-[#C49B4B]" />

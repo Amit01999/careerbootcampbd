@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Target } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 
 export default function Footer1() {
   const socialIcons = {
@@ -34,13 +35,11 @@ export default function Footer1() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
             <div className="lg:col-span-2">
-              <Link to="/" className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#C49B4B] to-[#D4AF5A] flex items-center justify-center shadow-lg shadow-[#C49B4B]/20">
-                  <Target className="w-6 h-6 text-[#09090B]" />
-                </div>
-                <div>
-                  <span className="text-xl font-bold text-white">BankPrep</span>
-                </div>
+              <Link to="/" className="flex items-center gap-3">
+                <img src={logo} alt="Logo" className="w-12 h-12 " />
+                <span className="text-lg font-semibold tracking-tight text-white">
+                  Private Bank Bootcamp
+                </span>
               </Link>
               <p className="text-white/35 mb-6 max-w-sm leading-relaxed">
                 Bangladesh&apos;s most trusted platform for bank exam

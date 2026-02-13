@@ -12,6 +12,7 @@ import HeroSection from './HeroSection1';
 import Services from './Services';
 import PublicationsShowcase from './PublicationsShowcase';
 import ResourcePersons from './ResourcePersons';
+import VideoCourses from './VideoCourse';
 
 export default function BankPrepHomepage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,14 +26,15 @@ export default function BankPrepHomepage() {
 
       {/* <Services /> */}
       <PublicationsShowcase />
+      <VideoCourses />
       {/* Feature Showcase */}
-      <FeatureShowcase />
-
+      {/* <FeatureShowcase /> */}
+      <ResourcePersons />
       {/* Popular Mock Tests Slider */}
-      <MockTest />
+      {/* <MockTest /> */}
 
       {/* Courses & Learning Programs */}
-      <CoursesLearningPrograms />
+      {/* <CoursesLearningPrograms /> */}
 
       {/* App Promotion Section */}
       {/* <AppPromotion /> */}
@@ -42,12 +44,12 @@ export default function BankPrepHomepage() {
 
       {/* Bank Recruitment Processes */}
       <RecruitmentProcesses />
-      <ResourcePersons />
+
       {/* Footer CTA Strip */}
-      <CTA />
+      {/* <CTA /> */}
 
       {/* FAQ Section */}
-      <FAQSection />
+      {/* <FAQSection /> */}
 
       {/* Success Stories / Testimonials */}
       <SuccessStories />
