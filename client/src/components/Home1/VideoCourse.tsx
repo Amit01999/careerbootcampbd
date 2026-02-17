@@ -30,28 +30,38 @@ export default function VideoCourses() {
       {/* Video Thumbnails */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
         {videoThumbnails.map((src, i) => (
-          <motion.div
+          <a
             key={i}
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: i * 0.15 }}
-            className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            style={{
-              background:
-                'linear-gradient(135deg, rgba(196,155,75,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-              border: '1px solid rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(20px)',
-            }}
+            href="https://wa.me/message/U4NIBFONAR26H1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group"
           >
-            <img
-              src={src}
-              alt={`Video ${i + 1}`}
-              className="w-full h-64 md:h-72 lg:h-80 object-cover rounded-2xl"
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.15 }}
+              className="relative cursor-pointer overflow-hidden rounded-2xl shadow-lg transition-shadow duration-300 transform will-change-transform group-hover:scale-105 group-hover:shadow-2xl"
+              style={{
+                background:
+                  'linear-gradient(135deg, rgba(196,155,75,0.05) 0%, rgba(255,255,255,0.02) 100%)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(20px)',
+              }}
+            >
+              <img
+                src={src}
+                alt={`Video ${i + 1}`}
+                className="w-full h-64 md:h-72 lg:h-80 object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
+              />
 
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-25 transition-opacity duration-300 rounded-2xl" />
-          </motion.div>
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-25 transition-opacity duration-300 rounded-2xl" />
+
+              {/* Golden border/glow on hover */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl ring-0 transition-shadow duration-300 group-hover:ring-4 group-hover:ring-[#D4AF37]/70" />
+            </motion.div>
+          </a>
         ))}
       </div>
     </section>

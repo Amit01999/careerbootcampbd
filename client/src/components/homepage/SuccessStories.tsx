@@ -5,21 +5,21 @@ import { useState, useEffect } from 'react';
 const testimonials = [
   {
     name: 'Rafiq Ahmed',
-    role: 'Bangladesh Bank Officer',
+    role: 'BRAC Bank Officer',
     quote:
       "BankPrep's model tests were incredibly accurate. The actual exam felt familiar!",
     rating: 5,
   },
   {
     name: 'Fatima Khatun',
-    role: 'Sonali Bank Senior Officer',
+    role: 'Dutch-Bangla Bank Senior Officer',
     quote:
       'The MCQ explanations helped me understand concepts I struggled with for years.',
     rating: 5,
   },
   {
     name: 'Kamal Hossain',
-    role: 'Janata Bank Officer',
+    role: 'City Bank Officer',
     quote:
       'Viva preparation module gave me the confidence I needed. Highly recommended!',
     rating: 5,
