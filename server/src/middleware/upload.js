@@ -1,25 +1,21 @@
 import multer from 'multer';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import { errorResponse } from '../utils/response.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const TEMP_UPLOAD_DIR = path.join(__dirname, '../../uploads/temp');
+import { getUploadTempDir } from '../config/uploadPaths.js';
 
 // Configure storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     try {
-      if (!fs.existsSync(TEMP_UPLOAD_DIR)) {
-        fs.mkdirSync(TEMP_UPLOAD_DIR, { recursive: true });
+      const dir = getUploadTempDir();
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
       }
-      cb(null, TEMP_UPLOAD_DIR);
+      cb(null, dir);
     } catch (err) {
-      cb(err, TEMP_UPLOAD_DIR);
+      cb(err);
     }
   },
   filename: (req, file, cb) => {

@@ -7,17 +7,22 @@ import { authLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
+// Gmail ignores dots for delivery, but we store emails as entered. Default
+// normalizeEmail() strips dots on @gmail.com, which breaks findOne() for
+// addresses like a.b@gmail.com saved with dots in MongoDB.
+const emailNormalize = { gmail_remove_dots: false };
+
 // Validation rules
 const registerValidation = [
   body('firstName').trim().notEmpty().withMessage('First name is required'),
   body('lastName').trim().notEmpty().withMessage('Last name is required'),
-  body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+  body('email').isEmail().normalizeEmail(emailNormalize).withMessage('Valid email is required'),
   body('phone').matches(/^(\+8801|01)[3-9]\d{8}$/).withMessage('Valid Bangladeshi phone number is required'),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
 ];
 
 const loginValidation = [
-  body('email').isEmail().normalizeEmail().withMessage('Valid email is required'),
+  body('email').isEmail().normalizeEmail(emailNormalize).withMessage('Valid email is required'),
   body('password').notEmpty().withMessage('Password is required'),
 ];
 

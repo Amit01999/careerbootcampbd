@@ -102,15 +102,11 @@ export const updateJobSolution = asyncHandler(async (req, res) => {
 
 /**
  * @route   DELETE /api/v1/admin/job-solutions/:id
- * @desc    Soft-delete job solution
+ * @desc    Permanently delete job solution
  * @access  Admin
  */
 export const deleteJobSolution = asyncHandler(async (req, res) => {
-  const item = await JobSolution.findByIdAndUpdate(
-    req.params.id,
-    { isActive: false },
-    { new: true }
-  );
+  const item = await JobSolution.findByIdAndDelete(req.params.id);
 
   if (!item) {
     return errorResponse(res, 'Job solution not found', 404);

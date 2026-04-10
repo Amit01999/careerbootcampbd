@@ -1,13 +1,10 @@
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../config/logger.js';
 import { uploadToS3 } from './s3Service.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { getUploadTempDir } from '../config/uploadPaths.js';
 
 /**
  * Generate PDF report for exam attempt
@@ -15,7 +12,9 @@ const __dirname = path.dirname(__filename);
 export const generateExamReport = async (attempt, user, exam) => {
   try {
     const fileName = `exam-report-${attempt._id}-${uuidv4()}.pdf`;
-    const filePath = path.join(__dirname, '../../uploads/temp', fileName);
+    const tempDir = getUploadTempDir();
+    await fs.promises.mkdir(tempDir, { recursive: true });
+    const filePath = path.join(tempDir, fileName);
 
     // Create PDF document
     const doc = new PDFDocument({

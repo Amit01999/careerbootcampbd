@@ -1,4 +1,5 @@
 import BankRecruitment from '../models/BankRecruitment.js';
+import { deleteImageByPublicId } from './cloudinaryService.js';
 
 export const listPublic = async ({ page = 1, limit = 50 }) => {
   const safePage = Math.max(parseInt(page, 10) || 1, 1);
@@ -68,7 +69,18 @@ export const updateById = async (id, update) => {
   return BankRecruitment.findByIdAndUpdate(id, update, { new: true, runValidators: true });
 };
 
-export const softDeleteById = async (id) => {
-  return BankRecruitment.findByIdAndUpdate(id, { isActive: false }, { new: true });
+/** Remove document from DB and delete logo from Cloudinary (best-effort). */
+export const deleteById = async (id) => {
+  const doc = await BankRecruitment.findById(id);
+  if (!doc) return null;
+  if (doc.bankLogoPublicId) {
+    try {
+      await deleteImageByPublicId(doc.bankLogoPublicId);
+    } catch {
+      // ignore Cloudinary errors; still remove DB row
+    }
+  }
+  await BankRecruitment.findByIdAndDelete(id);
+  return doc;
 };
 

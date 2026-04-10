@@ -53,9 +53,9 @@ export const updateModelTest = asyncHandler(async (req, res) => {
   successResponse(res, item, 'Model test updated successfully');
 });
 
-/** DELETE /api/v1/admin/model-tests/:id — soft delete */
+/** DELETE /api/v1/admin/model-tests/:id — permanent delete */
 export const deleteModelTest = asyncHandler(async (req, res) => {
-  const item = await ModelTest.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+  const item = await ModelTest.findByIdAndDelete(req.params.id);
   if (!item) return errorResponse(res, 'Model test not found', 404);
   successResponse(res, null, 'Model test deleted successfully');
 });

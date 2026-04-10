@@ -20,11 +20,15 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "client/dist/assets/$1"
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/index.html"
+      "dest": "/index.html"
     }
   ],
   "github": {

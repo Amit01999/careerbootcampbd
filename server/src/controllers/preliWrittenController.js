@@ -99,15 +99,11 @@ export const updatePreliWritten = asyncHandler(async (req, res) => {
 
 /**
  * @route   DELETE /api/v1/admin/preli-written/:id
- * @desc    Soft-delete preli & written content
+ * @desc    Permanently delete preli & written content
  * @access  Admin
  */
 export const deletePreliWritten = asyncHandler(async (req, res) => {
-  const item = await PreliWritten.findByIdAndUpdate(
-    req.params.id,
-    { isActive: false },
-    { new: true }
-  );
+  const item = await PreliWritten.findByIdAndDelete(req.params.id);
 
   if (!item) {
     return errorResponse(res, 'Content not found', 404);

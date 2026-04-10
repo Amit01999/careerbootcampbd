@@ -99,15 +99,11 @@ export const updateVivaPreparation = asyncHandler(async (req, res) => {
 
 /**
  * @route   DELETE /api/v1/admin/viva-preparation/:id
- * @desc    Soft-delete viva preparation content
+ * @desc    Permanently delete viva preparation content
  * @access  Admin
  */
 export const deleteVivaPreparation = asyncHandler(async (req, res) => {
-  const item = await VivaPreparation.findByIdAndUpdate(
-    req.params.id,
-    { isActive: false },
-    { new: true }
-  );
+  const item = await VivaPreparation.findByIdAndDelete(req.params.id);
 
   if (!item) {
     return errorResponse(res, 'Content not found', 404);

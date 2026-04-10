@@ -116,7 +116,7 @@ export const updateBankRecruitment = asyncHandler(async (req, res) => {
  * @access  Admin
  */
 export const deleteBankRecruitment = asyncHandler(async (req, res) => {
-  const item = await bankRecruitmentService.softDeleteById(req.params.id);
+  const item = await bankRecruitmentService.deleteById(req.params.id);
   if (!item) return errorResponse(res, 'Recruitment not found', 404);
   successResponse(res, null, 'Recruitment deleted successfully');
 });
