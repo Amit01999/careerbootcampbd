@@ -64,7 +64,8 @@ export const authService = {
   // Get current user
   async getMe() {
     const response = await api.get('/auth/me');
-    const user = response.data.data;
+    // Backend returns { success, data: { user: {...} } }
+    const user = response.data.data.user ?? response.data.data;
 
     auth.setUser(user);
 

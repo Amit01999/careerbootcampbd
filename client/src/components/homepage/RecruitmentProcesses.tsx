@@ -1,16 +1,33 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Sparkles, GraduationCap } from 'lucide-react';
+import { ArrowRight, Sparkles, GraduationCap, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { banksData } from '@/data/banksData';
 import { motion } from 'framer-motion';
+import { bankRecruitmentService, BankRecruitmentItem } from '@/services/bankRecruitment.service';
 
 export default function RecruitmentProcesses() {
   const navigate = useNavigate();
 
-  // Show first 8 banks (2 rows of 4)
-  const displayedBanks = banksData.slice(0, 8);
+  const [items, setItems] = React.useState<BankRecruitmentItem[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState('');
+
+  React.useEffect(() => {
+    const run = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const res = await bankRecruitmentService.getAll(1, 8);
+        setItems(res.data);
+      } catch (e: any) {
+        setError(e?.response?.data?.message || 'Failed to load recruitments');
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
+  }, []);
 
   return (
     <section className="relative py-16 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#09090B]">
@@ -47,16 +64,29 @@ export default function RecruitmentProcesses() {
 
         {/* Bank Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {displayedBanks.map((bank, i) => (
+          {loading ? (
+            <div className="col-span-full flex justify-center py-10">
+              <Loader2 className="w-6 h-6 animate-spin text-[#C49B4B]" />
+            </div>
+          ) : error ? (
+            <div className="col-span-full text-center py-8">
+              <div className="flex justify-center text-red-400 mb-2">
+                <AlertCircle className="w-5 h-5" />
+              </div>
+              <p className="text-white/70 font-semibold text-sm">Failed to load</p>
+              <p className="text-white/40 text-xs mt-1">{error}</p>
+            </div>
+          ) : (
+            items.map((bank, i) => (
             <motion.div
-              key={bank.id}
+              key={bank._id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
             >
               <motion.button
-                onClick={() => navigate(`/recruitment-process/${bank.id}`)}
+                onClick={() => navigate(`/recruitment-processes/${bank._id}`)}
                 whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 300 }}
                 className="group relative w-full h-full rounded-3xl p-6 shadow-lg transition-all duration-300 text-left overflow-hidden border border-white/[0.06] hover:border-[#C49B4B]/20"
@@ -73,36 +103,30 @@ export default function RecruitmentProcesses() {
                   {/* Bank Logo */}
                   <motion.div
                     whileHover={{ rotate: 5, scale: 1.1 }}
-                    className="w-16 h-16 bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/10 rounded-2xl flex items-center justify-center mb-4 text-3xl transition-transform duration-300"
+                    className="w-16 h-16 bg-gradient-to-br from-[#C49B4B]/20 to-[#C49B4B]/5 border border-[#C49B4B]/10 rounded-2xl flex items-center justify-center mb-4 transition-transform duration-300 overflow-hidden"
                   >
-                    {bank.logo}
+                    <img
+                      src={bank.bankLogoUrl}
+                      alt={`${bank.bankName} logo`}
+                      className="w-full h-full object-contain p-2"
+                    />
                   </motion.div>
 
-                  {/* Bank Short Name */}
+                  {/* Badge */}
                   <div className="text-xs font-bold uppercase tracking-wider mb-2 text-[#C49B4B]">
-                    {bank.shortName}
+                    Recruitment
                   </div>
 
                   {/* Bank Full Name */}
                   <h3 className="text-lg font-semibold text-white mb-3 leading-tight group-hover:text-[#D4AF5A] transition-colors min-h-[3.5rem]">
-                    {bank.name}
+                    {bank.bankName}
                   </h3>
 
                   {/* Positions Badge */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {bank.positions.slice(0, 1).map((position, index) => (
-                      <Badge
-                        key={index}
-                        className="text-xs font-medium px-3 py-1 rounded-md bg-white/[0.04] text-white/40 border border-white/[0.06] shadow-sm"
-                      >
-                        {position}
-                      </Badge>
-                    ))}
-                    {bank.positions.length > 1 && (
-                      <Badge className="text-xs font-medium px-3 py-1 rounded-md bg-white/[0.04] text-white/40 border border-white/[0.06] shadow-sm">
-                        +{bank.positions.length - 1} more
-                      </Badge>
-                    )}
+                    <Badge className="text-xs font-medium px-3 py-1 rounded-md bg-white/[0.04] text-white/40 border border-white/[0.06] shadow-sm">
+                      {bank.positionTitle}
+                    </Badge>
                   </div>
 
                   {/* View Details */}
@@ -113,7 +137,8 @@ export default function RecruitmentProcesses() {
                 </div>
               </motion.button>
             </motion.div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Show All Button */}
@@ -153,7 +178,7 @@ export default function RecruitmentProcesses() {
           </motion.div>
 
           <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-white/30">
-            Explore {banksData.length}+ bank recruitment programs
+            Explore more bank recruitment programs
           </p>
         </motion.div>
       </div>

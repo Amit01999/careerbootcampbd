@@ -30,6 +30,7 @@
     "@aws-sdk/s3-request-presigner": "^3.485.0",
     "bcrypt": "^5.1.1",
     "bullmq": "^5.1.5",
+    "cloudinary": "^2.9.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

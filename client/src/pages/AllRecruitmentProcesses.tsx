@@ -1,21 +1,41 @@
 import React from 'react';
-import { Search, Building2, GraduationCap } from 'lucide-react';
+import { Search, Building2, AlertCircle, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import BankCard from '@/components/BankCard';
-import { banksData } from '@/data/banksData';
+import { useNavigate } from 'react-router-dom';
+import { bankRecruitmentService, BankRecruitmentItem } from '@/services/bankRecruitment.service';
 
 export default function AllRecruitmentProcesses() {
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [items, setItems] = React.useState<BankRecruitmentItem[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState('');
+  const navigate = useNavigate();
 
-  const filteredBanks = banksData.filter(
-    bank =>
-      bank.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bank.shortName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bank.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      bank.positions.some(pos =>
-        pos.toLowerCase().includes(searchQuery.toLowerCase()),
-      ),
-  );
+  React.useEffect(() => {
+    const run = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const res = await bankRecruitmentService.getAll(1, 200);
+        setItems(res.data);
+      } catch (e: any) {
+        setError(e?.response?.data?.message || 'Failed to load recruitments');
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
+  }, []);
+
+  const filtered = items.filter((r) => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return true;
+    return (
+      r.bankName.toLowerCase().includes(q) ||
+      r.positionTitle.toLowerCase().includes(q) ||
+      (r.details || '').toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className="min-h-screen bg-[#09090B] mt-20">
@@ -35,7 +55,7 @@ export default function AllRecruitmentProcesses() {
         {/* Top accent line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 pb-20">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 ">
           <div className="text-center mb-10">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-full mb-6">
@@ -63,7 +83,7 @@ export default function AllRecruitmentProcesses() {
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
             <div className="relative">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 z-10" />
               <Input
                 type="text"
                 placeholder="Search banks, positions, or keywords..."
@@ -86,9 +106,9 @@ export default function AllRecruitmentProcesses() {
           <div className="flex items-center justify-between">
             <p className="text-gray-500 text-base font-medium">
               <span className="font-extrabold text-white text-2xl">
-                {filteredBanks.length}
+                {loading ? '—' : filtered.length}
               </span>{' '}
-              {filteredBanks.length === 1 ? 'bank' : 'banks'} available
+              {!loading && (filtered.length === 1 ? 'recruitment' : 'recruitments')} available
             </p>
             {searchQuery && (
               <button
@@ -102,20 +122,44 @@ export default function AllRecruitmentProcesses() {
         </div>
 
         {/* Cards Grid */}
-        {filteredBanks.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-5 h-5 animate-spin text-blue-400" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-16">
+            <div className="text-red-400 mb-3 flex justify-center">
+              <AlertCircle className="w-6 h-6" />
+            </div>
+            <p className="text-gray-300 font-semibold">Failed to load</p>
+            <p className="text-gray-500 text-sm mt-1">{error}</p>
+          </div>
+        ) : filtered.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredBanks.map(bank => (
-              <BankCard
-                key={bank.id}
-                id={bank.id}
-                name={bank.name}
-                shortName={bank.shortName}
-                logo={bank.logo}
-                color={bank.color}
-                bgColor={bank.bgColor}
-                description={bank.description}
-                positions={bank.positions}
-              />
+            {filtered.map((r) => (
+              <button
+                key={r._id}
+                onClick={() => navigate(`/recruitment-processes/${r._id}`)}
+                className="text-left group rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] transition-colors overflow-hidden"
+              >
+                <div className="p-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={r.bankLogoUrl} alt={`${r.bankName} logo`} className="w-full h-full object-contain p-2" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-white font-extrabold tracking-tight text-lg truncate">{r.bankName}</p>
+                      <p className="text-gray-400 font-medium text-sm mt-0.5 truncate">{r.positionTitle}</p>
+                    </div>
+                  </div>
+                  <div className="mt-5">
+                    <span className="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-bold border border-blue-500/25 bg-blue-500/10 text-blue-300">
+                      View Details
+                    </span>
+                  </div>
+                </div>
+                <div className="h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+              </button>
             ))}
           </div>
         ) : (
@@ -133,7 +177,7 @@ export default function AllRecruitmentProcesses() {
               onClick={() => setSearchQuery('')}
               className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-500 transition-colors shadow-lg"
             >
-              View All Banks
+              View All
             </button>
           </div>
         )}

@@ -2,15 +2,25 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
+import fs from 'fs';
 import { errorResponse } from '../utils/response.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const TEMP_UPLOAD_DIR = path.join(__dirname, '../../uploads/temp');
+
 // Configure storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/temp'));
+    try {
+      if (!fs.existsSync(TEMP_UPLOAD_DIR)) {
+        fs.mkdirSync(TEMP_UPLOAD_DIR, { recursive: true });
+      }
+      cb(null, TEMP_UPLOAD_DIR);
+    } catch (err) {
+      cb(err, TEMP_UPLOAD_DIR);
+    }
   },
   filename: (req, file, cb) => {
     const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
@@ -45,8 +55,33 @@ const upload = multer({
   },
 });
 
+// Image-only uploader (does not depend on ALLOWED_FILE_TYPES)
+const imageOnlyFilter = (req, file, cb) => {
+  const allowedImageTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/jpg',
+  ];
+
+  if (allowedImageTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error(`File type not allowed: ${file.mimetype}`), false);
+  }
+};
+
+const uploadImagesOnly = multer({
+  storage,
+  fileFilter: imageOnlyFilter,
+  limits: {
+    fileSize: parseInt(process.env.MAX_IMAGE_FILE_SIZE || process.env.MAX_FILE_SIZE || '5242880', 10), // 5MB default
+  },
+});
+
 // Single file upload
 export const uploadSingle = (fieldName) => upload.single(fieldName);
+export const uploadSingleImage = (fieldName) => uploadImagesOnly.single(fieldName);
 
 // Multiple files upload
 export const uploadMultiple = (fieldName, maxCount = 10) => upload.array(fieldName, maxCount);

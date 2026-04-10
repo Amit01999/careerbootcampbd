@@ -20,11 +20,33 @@ import Circulars from './pages/Circulars';
 import AllRecruitmentProcesses from './pages/AllRecruitmentProcesses';
 import RecruitmentProcessDetail from './pages/RecruitmentProcessDetail';
 
+// Preli & Written Pages
+import PreliWritten from './pages/PreliWritten';
+import PreliWrittenDetail from './pages/PreliWrittenDetail';
+
+// Viva Preparation Pages
+import VivaPreparation from './pages/VivaPreparation';
+import VivaPreparationDetail from './pages/VivaPreparationDetail';
+
+// Job Solutions Pages
+import JobSolutions from './pages/JobSolutions';
+import JobSolutionsDetail from './pages/JobSolutionsDetail';
+
+// Model Tests Pages
+import ModelTests from './pages/ModelTests';
+import ModelTestsDetail from './pages/ModelTestsDetail';
+
 // Admin Pages
 import { Layout } from './components/Layout';
 import { AdminLayout } from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import QuestionBank from './pages/admin/QuestionBank';
+import PreliWrittenManagement from './pages/admin/PreliWrittenManagement';
+import VivaPreparationManagement from './pages/admin/VivaPreparationManagement';
+import JobSolutionsManagement from './pages/admin/JobSolutionsManagement';
+import ModelTestsManagement from './pages/admin/ModelTestsManagement';
+import BankRecruitmentManagement from './pages/admin/BankRecruitmentManagement';
+import UsersManagement from './pages/admin/UsersManagement';
 
 import NotFound from './pages/NotFound';
 import Home1 from './components/Home1/Homepage1';
@@ -56,12 +78,22 @@ const App = () => (
                 path="/recruitment-processes"
                 element={<AllRecruitmentProcesses />}
               />
+              <Route path="/recruitment-processes/:id" element={<RecruitmentProcessDetail />} />
+              {/* Backward-compatible aliases */}
               <Route path="/bank/:id" element={<RecruitmentProcessDetail />} />
               {/* Legacy route redirect */}
               <Route
                 path="/recruitment-process/:id"
                 element={<RecruitmentProcessDetail />}
               />
+              <Route path="/preli-written" element={<PreliWritten />} />
+              <Route path="/preli-written/:id" element={<PreliWrittenDetail />} />
+              <Route path="/viva-preparation" element={<VivaPreparation />} />
+              <Route path="/viva-preparation/:id" element={<VivaPreparationDetail />} />
+              <Route path="/job-solutions" element={<JobSolutions />} />
+              <Route path="/job-solutions/:id" element={<JobSolutionsDetail />} />
+              <Route path="/model-tests" element={<ModelTests />} />
+              <Route path="/model-tests/:id" element={<ModelTestsDetail />} />
 
               {/* Protected Student Routes */}
               <Route
@@ -136,6 +168,12 @@ const App = () => (
             >
               <Route index element={<AdminDashboard />} />
               <Route path="questions" element={<QuestionBank />} />
+              <Route path="preli-written" element={<PreliWrittenManagement />} />
+              <Route path="viva-preparation" element={<VivaPreparationManagement />} />
+              <Route path="job-solutions" element={<JobSolutionsManagement />} />
+              <Route path="model-tests" element={<ModelTestsManagement />} />
+              <Route path="bank-recruitment" element={<BankRecruitmentManagement />} />
+              <Route path="users" element={<UsersManagement />} />
             </Route>
           </Routes>
         </BrowserRouter>

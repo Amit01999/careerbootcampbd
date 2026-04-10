@@ -1,257 +1,195 @@
-import { StatCard } from '@/components/StatCard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { 
-  Users, 
-  BookOpen, 
-  DollarSign,
-  TrendingUp,
-  FileText,
-  Calendar,
-  ArrowRight
-} from 'lucide-react';
-import {
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Loader2, Sparkles } from 'lucide-react';
+import { toast } from 'sonner';
+import { AdminModuleTabs } from '@/components/admin/AdminModuleTabs';
+import { adminModules } from '@/config/adminModules';
 
+/* ─── Design tokens ───────────────────────────────────────────────────────── */
+const CARD     = '#1E1D1B';
+const BORDER   = 'rgba(255,255,255,0.07)';
+const GOLD     = '#C49B4B';
+const TEXT     = '#F0EBE1';
+const MUTED    = '#8A8278';
+
+/* ─── Dashboard ───────────────────────────────────────────────────────────── */
 const AdminDashboard = () => {
-  const revenueData = [
-    { month: 'Jan', revenue: 45000 },
-    { month: 'Feb', revenue: 52000 },
-    { month: 'Mar', revenue: 48000 },
-    { month: 'Apr', revenue: 61000 },
-    { month: 'May', revenue: 72000 },
-    { month: 'Jun', revenue: 68000 },
-  ];
+  const [loadingCounts, setLoadingCounts] = useState(true);
+  const [counts, setCounts] = useState<Record<string, number | null>>({});
 
-  const examData = [
-    { name: 'Full Length', value: 35, color: 'hsl(var(--primary))' },
-    { name: 'Math', value: 25, color: 'hsl(var(--secondary))' },
-    { name: 'English', value: 20, color: 'hsl(var(--accent))' },
-    { name: 'GK', value: 15, color: 'hsl(var(--info))' },
-    { name: 'Other', value: 5, color: 'hsl(var(--muted))' },
-  ];
+  const modules = useMemo(() => adminModules, []);
 
-  const recentUsers = [
-    { id: '1', name: 'Ahmed Rahman', email: 'ahmed@example.com', joined: '2025-01-15', status: 'Active' },
-    { id: '2', name: 'Fatima Khan', email: 'fatima@example.com', joined: '2025-01-14', status: 'Active' },
-    { id: '3', name: 'Imran Hossain', email: 'imran@example.com', joined: '2025-01-13', status: 'Active' },
-  ];
+  useEffect(() => {
+    const run = async () => {
+      try {
+        setLoadingCounts(true);
+        const entries = await Promise.all(
+          modules.map(async (m) => {
+            try {
+              const c = await m.getCount();
+              return [m.key, c] as const;
+            } catch {
+              return [m.key, null] as const;
+            }
+          }),
+        );
+        setCounts(Object.fromEntries(entries));
+      } catch (e: any) {
+        toast.error(e?.response?.data?.message || 'Failed to load dashboard data');
+      } finally {
+        setLoadingCounts(false);
+      }
+    };
+    run();
+  }, [modules]);
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Overview of platform performance and statistics</p>
-      </div>
+    <div className="space-y-7">
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Total Users"
-          value="10,234"
-          icon={Users}
-          trend={{ value: 12.5, isPositive: true }}
-          variant="primary"
-        />
-        <StatCard
-          title="Active Exams"
-          value="524"
-          icon={BookOpen}
-          trend={{ value: 8.2, isPositive: true }}
-          variant="secondary"
-        />
-        <StatCard
-          title="Revenue (This Month)"
-          value="৳68,000"
-          icon={DollarSign}
-          trend={{ value: 15.3, isPositive: true }}
-          variant="accent"
-        />
-        <StatCard
-          title="Completion Rate"
-          value="87%"
-          icon={TrendingUp}
-          trend={{ value: 3.1, isPositive: true }}
-          variant="default"
-        />
-      </div>
-
-      {/* Charts Row */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={revenueData}>
-                <defs>
-                  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
-                <YAxis stroke="hsl(var(--muted-foreground))" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#colorRevenue)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Exam Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Exam Distribution</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={examData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {examData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    border: '1px solid hsl(var(--border))',
-                    borderRadius: '8px',
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Recent Users */}
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Recent Users</CardTitle>
-          <Link to="/admin/users">
-            <Button variant="ghost" size="sm">
-              View All
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </Link>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentUsers.map((user) => (
-              <div
-                key={user.id}
-                className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold">{user.name}</h4>
-                    <p className="text-sm text-muted-foreground">{user.email}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4" />
-                    <span>{new Date(user.joined).toLocaleDateString()}</span>
-                  </div>
-                  <span className="inline-block mt-1 px-2 py-1 bg-success/10 text-success text-xs rounded-full">
-                    {user.status}
-                  </span>
-                </div>
+      {/* ── Hero header ── */}
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(196,155,75,0.10)_0%,_transparent_55%)]" />
+        <div className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#C49B4B]/[0.06] blur-[90px]" />
+        <div className="absolute -bottom-28 -left-28 w-[520px] h-[520px] rounded-full bg-[#7C9EE8]/[0.05] blur-[110px]" />
+        <div className="relative p-6 sm:p-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+            <div className="min-w-0">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#C49B4B]/25 bg-[#C49B4B]/10 text-[#D7B46A] text-[11px] font-bold uppercase tracking-[0.18em]">
+                <Sparkles className="w-3.5 h-3.5" />
+                Admin Dashboard
               </div>
-            ))}
+              <h1 style={{ color: TEXT }} className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight">
+                Manage content, users, and resources
+              </h1>
+              <p style={{ color: MUTED }} className="text-sm mt-1.5 max-w-2xl">
+                Everything here links to real modules. Counts are pulled from live admin APIs and remain safe if any endpoint is unavailable.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-white/40">
+                  Modules
+                </p>
+                <p className="text-lg font-extrabold" style={{ color: TEXT }}>
+                  {modules.length}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-white/40">
+                  Status
+                </p>
+                <p className="text-lg font-extrabold" style={{ color: TEXT }}>
+                  {loadingCounts ? (
+                    <span className="inline-flex items-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" style={{ color: GOLD }} />
+                      Loading
+                    </span>
+                  ) : (
+                    'Live'
+                  )}
+                </p>
+              </div>
+            </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-3 gap-6">
-        <Link to="/admin/questions">
-          <Card className="cursor-pointer transition-smooth hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                <FileText className="w-8 h-8 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Manage Questions</h3>
-                <p className="text-sm text-muted-foreground">Upload and organize question banks</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+          <div className="mt-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-        <Link to="/admin/exams">
-          <Card className="cursor-pointer transition-smooth hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto">
-                <BookOpen className="w-8 h-8 text-secondary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Manage Exams</h3>
-                <p className="text-sm text-muted-foreground">Create and schedule exams</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
-
-        <Link to="/admin/circulars">
-          <Card className="cursor-pointer transition-smooth hover:shadow-lg hover:-translate-y-1">
-            <CardContent className="p-6 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto">
-                <FileText className="w-8 h-8 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold mb-1">Job Circulars</h3>
-                <p className="text-sm text-muted-foreground">Post and manage job listings</p>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+          <div className="mt-5">
+            <p style={{ color: MUTED }} className="text-xs font-semibold uppercase tracking-widest mb-3">
+              Modules
+            </p>
+            <AdminModuleTabs />
+          </div>
+        </div>
       </div>
+
+      {/* ── Quick navigation cards + real counts ── */}
+      <div>
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 style={{ color: TEXT }} className="text-base font-semibold tracking-tight">
+              Quick Navigation
+            </h2>
+            <p style={{ color: MUTED }} className="text-xs mt-0.5">
+              Jump directly into a module. Counts show how many items exist.
+            </p>
+          </div>
+        </div>
+        <div className="mt-4" />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {modules.map((m) => {
+            const Icon = m.icon;
+            const count = counts[m.key];
+            return (
+              <Link key={m.key} to={m.path}>
+                <div
+                  style={{ background: CARD, border: `1px solid ${BORDER}` }}
+                  className="relative rounded-2xl p-5 overflow-hidden hover:border-[#C49B4B]/25 transition-all duration-200 hover:-translate-y-0.5 group cursor-pointer"
+                >
+                  {/* glow */}
+                  <div
+                    className="absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"
+                    style={{
+                      background: `radial-gradient(400px circle at 20% 0%, ${m.accent}25, transparent 55%)`,
+                    }}
+                  />
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div
+                        style={{
+                          background: `${m.accent}18`,
+                          border: `1px solid ${m.accent}25`,
+                        }}
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                      >
+                        <Icon style={{ color: m.accent }} className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <p style={{ color: TEXT }} className="text-sm font-semibold truncate">
+                          {m.label}
+                        </p>
+                        <p style={{ color: MUTED }} className="text-xs leading-snug mt-1">
+                          {m.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="text-right shrink-0">
+                      <div
+                        style={{ color: TEXT }}
+                        className="text-3xl font-extrabold tracking-tight leading-none"
+                        title={count === null ? 'Unable to load count' : undefined}
+                      >
+                        {loadingCounts ? (
+                          <span className="inline-flex items-center">
+                            <Loader2 className="w-4 h-4 animate-spin" style={{ color: GOLD }} />
+                          </span>
+                        ) : (
+                          count ?? '—'
+                        )}
+                      </div>
+                      <div className="text-[11px] font-semibold uppercase tracking-widest text-white/35 mt-2">
+                        total
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative mt-5 flex items-center justify-between">
+                    <div className="text-xs font-semibold text-white/35">
+                      {loadingCounts ? 'Fetching count…' : count === null ? 'Count unavailable' : 'Up to date'}
+                    </div>
+                    <div className="flex items-center justify-end text-xs font-semibold" style={{ color: GOLD }}>
+                      Open <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
     </div>
   );
 };

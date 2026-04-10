@@ -9,6 +9,11 @@ import Circular from './Circular.js';
 import Notification from './Notification.js';
 import Settings from './Settings.js';
 import AuditLog from './AuditLog.js';
+import PreliWritten from './PreliWritten.js';
+import VivaPreparation from './VivaPreparation.js';
+import JobSolution from './JobSolution.js';
+import ModelTest from './ModelTest.js';
+import BankRecruitment from './BankRecruitment.js';
 
 export {
   User,
@@ -21,4 +26,9 @@ export {
   Notification,
   Settings,
   AuditLog,
+  PreliWritten,
+  VivaPreparation,
+  JobSolution,
+  ModelTest,
+  BankRecruitment,
 };

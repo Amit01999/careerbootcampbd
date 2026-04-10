@@ -18,7 +18,7 @@ interface AuthContextType {
   loading: boolean;
   isAuthenticated: boolean;
   isAdmin: boolean;
-  login: (data: LoginData) => Promise<void>;
+  login: (data: LoginData) => Promise<any>;
   register: (data: RegisterData) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -69,8 +69,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (data: LoginData) => {
     try {
       const response = await authService.login(data);
-      setUser(response.data.user);
+      const user = response.data.user;
+      setUser(user);
       toast.success('Login successful!');
+      return user;
     } catch (error: any) {
       const message = error.response?.data?.message || 'Login failed';
       toast.error(message);

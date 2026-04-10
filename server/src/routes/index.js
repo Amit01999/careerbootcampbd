@@ -8,6 +8,12 @@ import circularRoutes from './circularRoutes.js';
 import paymentRoutes from './paymentRoutes.js';
 import notificationRoutes from './notificationRoutes.js';
 import settingsRoutes from './settingsRoutes.js';
+import preliWrittenRoutes from './preliWrittenRoutes.js';
+import vivaPreparationRoutes from './vivaPreparationRoutes.js';
+import jobSolutionRoutes from './jobSolutionRoutes.js';
+import modelTestRoutes from './modelTestRoutes.js';
+import bankRecruitmentRoutes from './bankRecruitmentRoutes.js';
+import usersRoutes from './usersRoutes.js';
 
 // Import admin route modules
 import adminRoutes from './adminRoutes.js';
@@ -17,6 +23,11 @@ import adminPaymentRoutes from './adminPaymentRoutes.js';
 import adminNotificationRoutes from './adminNotificationRoutes.js';
 import adminSettingsRoutes from './adminSettingsRoutes.js';
 import userRoutes from './userRoutes.js';
+import adminPreliWrittenRoutes from './adminPreliWrittenRoutes.js';
+import adminVivaPreparationRoutes from './adminVivaPreparationRoutes.js';
+import adminJobSolutionRoutes from './adminJobSolutionRoutes.js';
+import adminModelTestRoutes from './adminModelTestRoutes.js';
+import adminBankRecruitmentRoutes from './adminBankRecruitmentRoutes.js';
 
 const router = express.Router();
 
@@ -39,6 +50,24 @@ router.use('/notifications', notificationRoutes);
 
 // Settings (Public)
 router.use('/settings', settingsRoutes);
+
+// Preli & Written (Public)
+router.use('/preli-written', preliWrittenRoutes);
+
+// Viva Preparation (Public)
+router.use('/viva-preparation', vivaPreparationRoutes);
+
+// Job Solutions (Public)
+router.use('/job-solutions', jobSolutionRoutes);
+
+// Model Tests (Public)
+router.use('/model-tests', modelTestRoutes);
+
+// Bank Recruitments (Public + admin-protected CRUD per requirements)
+router.use('/bank-recruitments', bankRecruitmentRoutes);
+
+// Users (Admin-only alias: GET /api/v1/users)
+router.use('/users', usersRoutes);
 
 // ============ ADMIN ROUTES ============
 
@@ -65,6 +94,21 @@ router.use('/admin/settings', adminSettingsRoutes);
 
 // Admin User Management
 router.use('/admin/users', userRoutes);
+
+// Admin Preli & Written Management
+router.use('/admin/preli-written', adminPreliWrittenRoutes);
+
+// Admin Viva Preparation Management
+router.use('/admin/viva-preparation', adminVivaPreparationRoutes);
+
+// Admin Job Solutions Management
+router.use('/admin/job-solutions', adminJobSolutionRoutes);
+
+// Admin Model Tests Management
+router.use('/admin/model-tests', adminModelTestRoutes);
+
+// Admin Bank Recruitment Management
+router.use('/admin/bank-recruitments', adminBankRecruitmentRoutes);
 
 // ============ SYSTEM ROUTES ============
 

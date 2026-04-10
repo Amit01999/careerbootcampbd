@@ -453,7 +453,10 @@ export default function HeroSection() {
                       </h3>
                     </div>
 
-                    <CardButtons freeLink="/exams" premiumLink="/auth" />
+                    <CardButtons
+                      freeLink="/preli-written"
+                      premiumLink="/auth"
+                    />
                   </motion.div>
                 </TiltCard>
 
@@ -481,7 +484,7 @@ export default function HeroSection() {
                         Job Solutions
                       </h3>
 
-                      <CardButtons freeLink="/exams" premiumLink="/auth" />
+                      <CardButtons freeLink="/job-solutions" premiumLink="/auth" />
                     </motion.div>
                   </TiltCard>
 
@@ -507,7 +510,7 @@ export default function HeroSection() {
                         Model Tests
                       </h3>
 
-                      <CardButtons freeLink="/exams" premiumLink="/auth" />
+                      <CardButtons freeLink="/model-tests" premiumLink="/auth" />
                     </motion.div>
                   </TiltCard>
                 </div>
@@ -531,11 +534,11 @@ export default function HeroSection() {
                       </div>
 
                       <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                        AI Viva Preparation
+                        Viva Preparation
                       </h3>
 
                       <div className="ml-auto">
-                        <CardButtons freeLink="/exams" premiumLink="/auth" />
+                        <CardButtons freeLink="/viva-preparation" premiumLink="/auth" />
                       </div>
                     </div>
                   </motion.div>
