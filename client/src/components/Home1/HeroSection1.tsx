@@ -15,6 +15,9 @@ import {
 } from 'lucide-react';
 import hi from '../../assets/hero-aspirant.jpg';
 
+/** WhatsApp — all Premium CTAs in this hero */
+const PREMIUM_WHATSAPP_URL = 'https://wa.me/message/U4NIBFONAR26H1';
+
 // ─── Floating Orb Canvas ────────────────────────────────────────────────
 function OrbCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -210,7 +213,7 @@ function AnimatedNumber({
 // ─── Card Action Buttons ────────────────────────────────────────────────
 function CardButtons({
   freeLink = '/exams',
-  premiumLink = '/auth',
+  premiumLink = PREMIUM_WHATSAPP_URL,
 }: {
   freeLink?: string;
   premiumLink?: string;
@@ -225,13 +228,15 @@ function CardButtons({
         Free
       </Link>
 
-      <Link
-        to={premiumLink}
+      <a
+        href={premiumLink}
+        target="_blank"
+        rel="noopener noreferrer"
         className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-gradient-to-r from-[#C49B4B]/15 to-[#D4AF5A]/10 border border-[#C49B4B]/20 text-[#D4AF5A] hover:from-[#C49B4B]/25 hover:to-[#D4AF5A]/15 hover:border-[#C49B4B]/35 transition-all duration-300"
       >
         <Lock className="w-3 h-3" />
         Premium
-      </Link>
+      </a>
     </div>
   );
 }
@@ -453,10 +458,7 @@ export default function HeroSection() {
                       </h3>
                     </div>
 
-                    <CardButtons
-                      freeLink="/preli-written"
-                      premiumLink="/auth"
-                    />
+                    <CardButtons freeLink="/preli-written" />
                   </motion.div>
                 </TiltCard>
 
@@ -484,7 +486,7 @@ export default function HeroSection() {
                         Job Solutions
                       </h3>
 
-                      <CardButtons freeLink="/job-solutions" premiumLink="/auth" />
+                      <CardButtons freeLink="/job-solutions" />
                     </motion.div>
                   </TiltCard>
 
@@ -510,7 +512,7 @@ export default function HeroSection() {
                         Model Tests
                       </h3>
 
-                      <CardButtons freeLink="/model-tests" premiumLink="/auth" />
+                      <CardButtons freeLink="/model-tests" />
                     </motion.div>
                   </TiltCard>
                 </div>
@@ -538,7 +540,7 @@ export default function HeroSection() {
                       </h3>
 
                       <div className="ml-auto">
-                        <CardButtons freeLink="/viva-preparation" premiumLink="/auth" />
+                        <CardButtons freeLink="/viva-preparation" />
                       </div>
                     </div>
                   </motion.div>

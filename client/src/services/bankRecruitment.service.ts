@@ -40,9 +40,8 @@ export const bankRecruitmentService = {
     form.append('details', data.details);
     form.append('logo', data.logoFile);
 
-    const response = await api.post('/admin/bank-recruitments', form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    // Let the browser set multipart boundary — do not set Content-Type manually
+    const response = await api.post('/admin/bank-recruitments', form);
     return response.data as { success: boolean; data: BankRecruitmentItem };
   },
 
@@ -53,9 +52,7 @@ export const bankRecruitmentService = {
     form.append('details', data.details);
     if (data.logoFile) form.append('logo', data.logoFile);
 
-    const response = await api.put(`/admin/bank-recruitments/${id}`, form, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const response = await api.put(`/admin/bank-recruitments/${id}`, form);
     return response.data as { success: boolean; data: BankRecruitmentItem };
   },
 

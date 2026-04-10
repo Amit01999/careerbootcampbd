@@ -134,9 +134,15 @@ const BankRecruitmentManagement = () => {
   };
 
   const validate = () => {
-    if (!bankName.trim()) return 'Bank name is required.';
-    if (!positionTitle.trim()) return 'Position / Job title is required.';
-    if (!details.trim()) return 'Recruitment details are required.';
+    const name = bankName.trim();
+    const title = positionTitle.trim();
+    const det = details.trim();
+    if (!name) return 'Bank name is required.';
+    if (name.length < 2) return 'Bank name must be at least 2 characters.';
+    if (!title) return 'Position / Job title is required.';
+    if (title.length < 2) return 'Position / Job title must be at least 2 characters.';
+    if (!det) return 'Recruitment details are required.';
+    if (det.length < 10) return 'Recruitment details must be at least 10 characters.';
     if (view === 'create' && !logoFile) return 'Bank logo image is required.';
     if (logoFile) {
       const okTypes = ['image/jpeg', 'image/png', 'image/webp'];
@@ -178,7 +184,12 @@ const BankRecruitmentManagement = () => {
       backToList();
       fetchItems();
     } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Failed to save');
+      const data = err.response?.data;
+      const firstField =
+        Array.isArray(data?.errors) && data.errors.length > 0
+          ? data.errors[0].message
+          : null;
+      toast.error(firstField || data?.message || 'Failed to save');
     } finally {
       setSubmitting(false);
     }
@@ -324,7 +335,11 @@ const BankRecruitmentManagement = () => {
             >
               Recruitment Details
             </h3>
-            <Field label="Details" required hint="Long description / rich text can be pasted here.">
+            <Field
+              label="Details"
+              required
+              hint="At least 10 characters. Long description / rich text can be pasted here."
+            >
               <textarea
                 placeholder="Write the full recruitment details…"
                 value={details}
